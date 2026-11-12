@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">BANCAM | بوابة حجوزات التصوير والإنتاج البصري</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #080808;
+            color: #f4f1ea;
+        }
+        h1, h2, h3, h4 {
+            font-weight: 600 !important;
+            letter-spacing: -0.015em;
+        }
+        .luxury-glow {
+            background: radial-gradient(circle at 50% 0%, rgba(230, 223, 211, 0.08) 0%, rgba(8, 8, 8, 0) 65%);
+        }
+        .luxury-card {
+            background: linear-gradient(180deg, #121212 0%, #0c0c0c 100%);
+            border: 1px solid #222222;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .luxury-card:hover {
+            transform: translateY(-6px);
+            border-color: #44403c;
+        }
+        .luxury-card.selected {
+            border-color: #e6dfd3;
+            background: linear-gradient(180deg, rgba(230, 223, 211, 0.09) 0%, #0e0e0e 100%);
+            box-shadow: 0 25px 50px -12px rgba(230, 223, 211, 0.12);
+        }
+        .addon-card {
+            background-color: #0e0e0e;
+            border: 1px solid #222222;
+        }
+        .addon-card.active {
+            border-color: #e6dfd3;
+            background-color: rgba(230, 223, 211, 0.08);
+        }
+        .btn-champagne {
+            background-color: #e6dfd3;
+            color: #080808;
+            transition: all 0.25s ease;
+        }
+        .btn-champagne:hover {
+            background-color: #f5f0e6;
+            transform: translateY(-1px);
+        }
+        .cta-cream-box {
+            background: linear-gradient(135deg, #e8e1d5 0%, #cfc6b6 100%);
+            color: #0a0a0a;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#e6dfd3] selection:text-[#080808]">
+
+    <!-- 1. واجهة الزوار والعملاء -->
+    <div id="clientView">
+        <header class="border-b border-neutral-900 bg-[#080808]/85 backdrop-blur-xl sticky top-0 z-40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+                <div class="flex items-center gap-3.5">
+                    <div id="brandLogoContainer" class="w-11 h-11 rounded-2xl bg-[#e6dfd3] text-[#080808] flex items-center justify-center shadow-lg text-xl font-black overflow-hidden">
+                        📸
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2.5">
+                            <h1 id="brandNameDisplay" class="font-black text-lg sm:text-xl text-white tracking-wider">BANCAM</h1>
+                            <span class="bg-neutral-900 text-[#e6dfd3] border border-neutral-800 text-[10px] px-2.5 py-0.5 rounded-full font-bold">متاح للحجز</span>
+                        </div>
+                        <p id="brandTaglineDisplay" class="text-xs text-neutral-400">استوديو الإنتاج البصري والتصوير التجاري</p>
+                    </div>
+                </div>
+
+                <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-neutral-400">
+                    <a href="#packages" class="hover:text-[#e6dfd3] transition">الباقات والأسعار</a>
+                    <a href="#portfolio" class="hover:text-[#e6dfd3] transition">معرض الأعمال</a>
+                    <a href="#booking-section" class="hover:text-[#e6dfd3] transition">حاسبة التكلفة</a>
+                </nav>
+
+                <a href="#booking-section" class="btn-champagne font-extrabold px-6 py-2.5 rounded-full text-sm shadow-lg">
+                    احجز جلستك الآن
+                </a>
+            </div>
+        </header>
+
+        <!-- القسم الرئيسي (Hero) -->
+        <section class="relative luxury-glow pt-20 pb-24 px-4 overflow-hidden border-b border-neutral-900">
+            <div class="max-w-6xl mx-auto text-center">
+                <div class="inline-flex items-center gap-2 bg-[#121212] border border-neutral-800 px-4 py-1.5 rounded-full text-xs font-semibold text-[#e6dfd3] mb-8">
+                    <span>✦</span>
+                    <span id="heroBadgeDisplay">إنتاج بصري فاخر للشركات، الشقق المخدومة، والعلامات التجارية بالرياض</span>
+                </div>
+                <h2 id="heroTitleDisplay" class="text-4xl sm:text-6xl md:text-7xl font-black text-white leading-[1.15] max-w-4xl mx-auto tracking-tight">
+                    من فكرتك إلى حضور بصري يترك أثراً.
+                </h2>
+                <p id="heroDescDisplay" class="text-neutral-400 max-w-2xl mx-auto mt-6 text-base sm:text-lg leading-relaxed font-normal">
+                    اختر باقة التصوير المناسبة لمشروعك، احسب التكلفة التقديرية الفورية مع الإضافات، واحجز موعدك مباشرة في أقل من دقيقة.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4 mt-10">
+                    <a href="#booking-section" class="btn-champagne font-extrabold px-9 py-4 rounded-full text-base shadow-2xl">
+                        ابدأ الحجز وحساب التكلفة ←
+                    </a>
+                    <a href="#portfolio" class="bg-[#121212] hover:bg-neutral-800 text-white border border-neutral-800 font-bold px-8 py-4 rounded-full text-base transition">
+                        استكشف أعمالنا
+                    </a>
+                </div>
+                <div id="statsContainer" class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mt-16 pt-12 border-t border-neutral-900"></div>
+            </div>
+        </section>
+
+        <!-- قسم الباقات -->
+        <section id="packages" class="max-w-7xl mx-auto px-4 sm:px-6 py-20">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-14 gap-4">
+                <div>
+                    <span class="text-[#e6dfd3] font-bold text-xs tracking-widest uppercase">01 / الباقات والأسعار</span>
+                    <h3 class="text-3xl sm:text-4xl font-black text-white mt-2">اختر الباقة المصممة لاحتياجك</h3>
+                </div>
+                <p class="text-neutral-400 text-sm">اضغط على أي باقة ليتم تحديدها تلقائياً في حاسبة الحجز بالأسفل</p>
+            </div>
+            <div id="packagesGrid" class="grid md:grid-cols-3 gap-7"></div>
+        </section>
+
+        <!-- قسم معرض الأعمال -->
+        <section id="portfolio" class="max-w-7xl mx-auto px-4 sm:px-6 py-16 border-t border-neutral-900">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-10 gap-4">
+                <div>
+                    <span class="text-[#e6dfd3] font-bold text-xs tracking-widest uppercase">02 / معرض الأعمال</span>
+                    <h3 class="text-3xl sm:text-4xl font-black text-white mt-2">مختارات من إنتاجنا البصري</h3>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filterPortfolio('all', this)" class="filter-btn btn-champagne font-bold text-xs px-4 py-2 rounded-full transition">الكل</button>
+                    <button onclick="filterPortfolio('products', this)" class="filter-btn bg-[#121212] text-neutral-400 hover:text-white border border-neutral-800 font-bold text-xs px-4 py-2 rounded-full transition">المنتجات والأطعمة</button>
+                    <button onclick="filterPortfolio('events', this)" class="filter-btn bg-[#121212] text-neutral-400 hover:text-white border border-neutral-800 font-bold text-xs px-4 py-2 rounded-full transition">المعارض والفعاليات</button>
+                    <button onclick="filterPortfolio('corporate', this)" class="filter-btn bg-[#121212] text-neutral-400 hover:text-white border border-neutral-800 font-bold text-xs px-4 py-2 rounded-full transition">الشركات والشقق</button>
+                </div>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="portfolioGrid"></div>
+        </section>
+
+        <!-- قسم الحجز والحاسبة -->
+        <section id="booking-section" class="max-w-6xl mx-auto px-4 sm:px-6 py-16">
+            <div class="bg-[#0e0e0e] border border-neutral-800/90 rounded-[2rem] p-6 sm:p-12 shadow-2xl">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 pb-6 border-b border-neutral-800/80 gap-4">
+                    <div>
+                        <span class="text-[#e6dfd3] text-xs font-bold tracking-widest uppercase">03 / الحجز الفوري</span>
+                        <h3 class="text-2xl sm:text-3xl font-black text-white mt-1.5">تأكيد الحجز وحاسبة التكلفة التقديرية</h3>
+                    </div>
+                    <button type="button" onclick="fillDemoData()" class="bg-[#161616] hover:bg-neutral-800 text-[#e6dfd3] border border-neutral-800 text-xs font-bold px-4 py-2.5 rounded-full transition">
+                        ⚡ تعبئة بيانات تجريبية
+                    </button>
+                </div>
+
+                <form id="bookingForm" onsubmit="submitBooking(event)" class="grid lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 space-y-6">
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-neutral-300 mb-2">الاسم الكامل أو اسم الجهة *</label>
+                                <input type="text" id="clientName" required placeholder="مثال: شركة بوابة الطباعة" class="w-full bg-[#080808] border border-neutral-800 rounded-2xl px-4 py-3.5 text-sm text-white focus:border-[#e6dfd3] focus:outline-none transition">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-neutral-300 mb-2">رقم الجوال (واتساب للتأكيد) *</label>
+                                <input type="tel" id="clientPhone" required placeholder="05XXXXXXXX" class="w-full bg-[#080808] border border-neutral-800 rounded-2xl px-4 py-3.5 text-sm text-white focus:border-[#e6dfd3] focus:outline-none transition">
+                            </div>
+                        </div>
+
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-neutral-300 mb-2">الباقة المطلوبة *</label>
+                                <select id="packageSelect" onchange="calculateTotal()" class="w-full bg-[#080808] border border-neutral-800 rounded-2xl px-4 py-3.5 text-sm text-white focus:border-[#e6dfd3] focus:outline-none transition"></select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-neutral-300 mb-2">موقع التصوير *</label>
+                                <select id="locationSelect" onchange="calculateTotal()" class="w-full bg-[#080808] border border-neutral-800 rounded-2xl px-4 py-3.5 text-sm text-white focus:border-[#e6dfd3] focus:outline-none transition"></select>
+                            </div>
+                        </div>
+
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-neutral-300 mb-2">تاريخ التصوير المفضل *</label>
+                                <input type="date" id="shootDate" required class="w-full bg-[#080808] border border-neutral-800 rounded-2xl px-4 py-3.5 text-sm text-white focus:border-[#e6dfd3] focus:outline-none transition">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-neutral-300 mb-2">الفترة الزمنية *</label>
+                                <select id="shootTime" class="w-full bg-[#080808] border border-neutral-800 rounded-2xl px-4 py-3.5 text-sm text-white focus:border-[#e6dfd3] focus:outline-none transition">
+                                    <option value="الفترة الصباحية (9:00 ص - 1:00 م)">الفترة الصباحية (9:00 ص - 1:00 م)</option>
+                                    <option value="فترة بعد الظهر (1:00 م - 5:00 م)">فترة بعد الظهر (1:00 م - 5:00 م)</option>
+                                    <option value="الفترة المسائية (5:00 م - 10:00 م)">الفترة المسائية (5:00 م - 10:00 م)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-neutral-300 mb-2.5">خدمات إضافية:</label>
+                            <div id="addonsFormContainer" class="grid sm:grid-cols-3 gap-3"></div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-neutral-300 mb-2">تفاصيل المشروع أو متطلبات خاصة</label>
+                            <textarea id="clientNotes" rows="3" placeholder="اكتب أي ملاحظات حول نوع المنتجات، موقع الشقة أو الفعالية، أو الأفكار المطلوبة..." class="w-full bg-[#080808] border border-neutral-800 rounded-2xl px-4 py-3 text-sm text-white focus:border-[#e6dfd3] focus:outline-none transition"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#080808] border border-neutral-800 rounded-3xl p-6 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between border-b border-neutral-900 pb-4 mb-5">
+                                <h4 class="font-extrabold text-white text-base">ملخص الفاتورة التقديرية</h4>
+                                <span class="bg-neutral-900 text-[#e6dfd3] border border-neutral-800 text-[11px] px-2.5 py-1 rounded-full font-bold">حساب فوري</span>
+                            </div>
+                            <div class="space-y-4 text-sm">
+                                <div class="flex justify-between items-start gap-2">
+                                    <span class="text-neutral-400">الباقة الأساسية:</span>
+                                    <span id="summaryPkg" class="font-bold text-white text-left">-</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-neutral-400">سعر الباقة:</span>
+                                    <span id="summaryPkgPrice" class="font-semibold text-neutral-200">-</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-neutral-400">موقع التصوير:</span>
+                                    <span id="summaryLoc" class="text-neutral-200 text-xs">-</span>
+                                </div>
+                                <div class="border-t border-neutral-900 pt-3">
+                                    <span class="text-neutral-400 block mb-1.5 text-xs">الإضافات المختارة:</span>
+                                    <div id="summaryAddons" class="text-[#e6dfd3] text-xs font-semibold">لا يوجد إضافات</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-neutral-900 pt-5 mt-8">
+                            <div class="flex justify-between items-center mb-5">
+                                <span class="text-neutral-300 font-bold text-sm">الإجمالي التقديري:</span>
+                                <span id="totalPrice" class="text-3xl font-black text-[#e6dfd3]">0 ريال</span>
+                            </div>
+                            <button type="submit" id="submitBtn" class="w-full btn-champagne font-black py-4 rounded-2xl shadow-xl text-base">
+                                تأكيد وإرسال طلب الحجز ✓
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- بطاقة الدعوة الختامية الفاخرة (Luxury Cream CTA) -->
+        <section class="max-w-6xl mx-auto px-4 sm:px-6 pb-20">
+            <div class="cta-cream-box rounded-[2.2rem] p-10 sm:p-16 flex flex-col md:flex-row justify-between items-center gap-8 shadow-2xl">
+                <div class="text-right max-w-xl">
+                    <span class="text-xs font-extrabold uppercase tracking-widest text-neutral-700">لديك مشروع في بالك؟</span>
+                    <h3 class="text-3xl sm:text-5xl font-black text-[#080808] mt-2 leading-tight">
+                        لنحوّل فكرتك إلى تجربة بصرية تحمل بصمتك.
+                    </h3>
+                </div>
+                <div class="flex flex-col items-center gap-3 shrink-0">
+                    <a href="#booking-section" class="bg-[#0a0a0a] hover:bg-neutral-800 text-[#f4f1ea] font-extrabold px-8 py-4 rounded-full text-sm transition shadow-xl">
+                        احجز جلستك الآن ↗
+                    </a>
+                    <a href="#packages" class="text-xs font-bold text-neutral-800 hover:underline">شاهد جميع الباقات والأسعار</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 2. لوحة التحكم الشاملة (حجوزات + إدارة محتوى الموقع CMS) -->
+    <div id="adminView" class="hidden max-w-7xl mx-auto px-4 sm:px-6 py-10 w-full">
+        <div class="flex flex-wrap justify-between items-center border-b border-neutral-800 pb-6 mb-6 gap-4">
+            <div>
+                <span class="bg-emerald-500/15 text-emerald-400 border border-emerald-500/20 text-xs px-3 py-1 rounded-full font-bold">لوحة الإدارة والتحكم الكامل بالموقع (CMS) ✓</span>
+                <h2 class="text-2xl sm:text-3xl font-black text-white mt-2">مركز إدارة الحجوزات وتخصيص الموقع</h2>
+            </div>
+            <div class="flex flex-wrap gap-3">
+                <button onclick="switchAdminTab('bookings')" id="tabBtnBookings" class="btn-champagne px-5 py-2.5 rounded-full text-xs font-extrabold transition">📋 جدول الحجوزات</button>
+                <button onclick="switchAdminTab('cms')" id="tabBtnCms" class="bg-neutral-900 hover:bg-neutral-800 text-white border border-neutral-800 px-5 py-2.5 rounded-full text-xs font-bold transition">🎨 تعديل الموقع والباقات والصور</button>
+                <button onclick="exitAdmin()" class="bg-neutral-950 border border-neutral-800 text-neutral-300 px-4 py-2.5 rounded-full text-xs font-bold transition">العودة للموقع ←</button>
+            </div>
+        </div>
+
+        <div id="adminBookingsTab">
+            <div class="flex justify-end gap-3 mb-4">
+                <button onclick="loadCloudData()" class="bg-neutral-900 hover:bg-neutral-800 text-white border border-neutral-800 px-4 py-2 rounded-full text-xs font-bold">🔄 تحديث الطلبات</button>
+                <button onclick="exportCSV()" class="bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 px-4 py-2 rounded-full text-xs font-bold">📥 تصدير Excel (CSV)</button>
+            </div>
+            <div class="bg-[#0e0e0e] border border-neutral-800 rounded-3xl overflow-hidden shadow-xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-right text-sm">
+                        <thead class="bg-[#080808] text-neutral-400 border-b border-neutral-800 text-xs">
+                            <tr>
+                                <th class="p-4">رقم التذكرة</th>
+                                <th class="p-4">تاريخ الطلب</th>
+                                <th class="p-4">العميل / الجهة</th>
+                                <th class="p-4">الجوال</th>
+                                <th class="p-4">الباقة والموقع</th>
+                                <th class="p-4">موعد التصوير</th>
+                                <th class="p-4">الإضافات</th>
+                                <th class="p-4">الإجمالي</th>
+                                <th class="p-4">إجراء سريع</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsTableBody" class="divide-y divide-neutral-900">
+                            <tr><td colspan="9" class="p-10 text-center text-neutral-500">جاري تحميل الحجوزات...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="adminCmsTab" class="hidden space-y-8">
+            <div class="bg-[#141414] border border-neutral-700 rounded-2xl p-4 flex flex-wrap justify-between items-center gap-4 sticky top-4 z-30 backdrop-blur-md">
+                <p class="text-xs text-[#e6dfd3] font-semibold">💡 بعد إضافة أو تعديل أي باقة أو صورة، اضغط على زر الحفظ ليتم نشرها لجميع الزوار فوراً.</p>
+                <button onclick="saveCmsToCloud()" id="saveCmsBtn" class="btn-champagne font-black px-6 py-2.5 rounded-full text-sm shadow-lg">
+                    💾 حفظ ونشر جميع التعديلات الآن
+                </button>
+            </div>
+
+            <!-- 1. الهوية -->
+            <div class="bg-[#0e0e0e] border border-neutral-800 rounded-3xl p-6 space-y-5">
+                <h3 class="text-lg font-extrabold text-[#e6dfd3] border-b border-neutral-800 pb-3">1. الهوية، الشعار، وأرقام التواصل</h3>
+                <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-xs text-neutral-400 mb-1">اسم المشروع / الاستوديو</label>
+                        <input type="text" id="cmsBrandName" class="w-full bg-[#080808] border border-neutral-800 rounded-xl px-3 py-2.5 text-sm text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-neutral-400 mb-1">الوصف المختصر تحت الاسم</label>
+                        <input type="text" id="cmsBrandTagline" class="w-full bg-[#080808] border border-neutral-800 rounded-xl px-3 py-2.5 text-sm text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-neutral-400 mb-1">الشعار (إيموجي أو رابط صورة مباشر)</label>
+                        <input type="text" id="cmsLogo" placeholder="📸 أو https://.../logo.png" class="w-full bg-[#080808] border border-neutral-800 rounded-xl px-3 py-2.5 text-sm text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-neutral-400 mb-1">رقم الواتساب (مع 966)</label>
+                        <input type="text" id="cmsWhatsapp" placeholder="9665XXXXXXXX" class="w-full bg-[#080808] border border-neutral-800 rounded-xl px-3 py-2.5 text-sm text-white">
+                    </div>
+                </div>
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs text-neutral-400 mb-1">العنوان الرئيسي الكبير (Hero Title)</label>
+                        <input type="text" id="cmsHeroTitle" class="w-full bg-[#080808] border border-neutral-800 rounded-xl px-3 py-2.5 text-sm text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-neutral-400 mb-1">النص التوضيحي تحت العنوان</label>
+                        <input type="text" id="cmsHeroDesc" class="w-full bg-[#080808] border border-neutral-800 rounded-xl px-3 py-2.5 text-sm text-white">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. إدارة الباقات -->
+            <div class="bg-[#0e0e0e] border border-neutral-800 rounded-3xl p-6 space-y-5">
+                <div class="flex flex-wrap justify-between items-center border-b border-neutral-800 pb-3 gap-3">
+                    <div>
+                        <h3 class="text-lg font-extrabold text-[#e6dfd3]">2. باقات التصوير والأسعار (إضافة / تعديل / حذف)</h3>
+                        <p class="text-xs text-neutral-400">يمكنك إضافة عدد غير محدود من الباقات أو تعديل الباقات الحالية</p>
+                    </div>
+                    <button type="button" onclick="addPackageCms()" class="btn-champagne font-extrabold text-xs px-4 py-2.5 rounded-full transition shadow-lg">
+                        + إضافة باقة تصوير جديدة
+                    </button>
+                </div>
+                <div id="cmsPackagesEditor" class="grid md:grid-cols-3 gap-6"></div>
+            </div>
+
+            <!-- 3. المواقع والإضافات -->
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-[#0e0e0e] border border-neutral-800 rounded-3xl p-6 space-y-4">
+                    <div class="flex justify-between items-center border-b border-neutral-800 pb-3">
+                        <h3 class="text-base font-extrabold text-[#e6dfd3]">3. مواقع التصوير ورسوم التنقل</h3>
+                        <button type="button" onclick="addLocationCms()" class="bg-neutral-900 hover:bg-neutral-800 text-[#e6dfd3] border border-neutral-800 font-bold text-xs px-3 py-1.5 rounded-full">+ إضافة موقع</button>
+                    </div>
+                    <div id="cmsLocationsEditor" class="space-y-3"></div>
+                </div>
+
+                <div class="bg-[#0e0e0e] border border-neutral-800 rounded-3xl p-6 space-y-4">
+                    <div class="flex justify-between items-center border-b border-neutral-800 pb-3">
+                        <h3 class="text-base font-extrabold text-[#e6dfd3]">4. الخدمات الإضافية الاختيارية</h3>
+                        <button type="button" onclick="addAddonCms()" class="bg-neutral-900 hover:bg-neutral-800 text-[#e6dfd3] border border-neutral-800 font-bold text-xs px-3 py-1.5 rounded-full">+ إضافة خدمة</button>
+                    </div>
+                    <div id="cmsAddonsEditor" class="space-y-3"></div>
+                </div>
+            </div>
+
+            <!-- 4. معرض الأعمال -->
+            <div class="bg-[#0e0e0e] border border-neutral-800 rounded-3xl p-6 space-y-5">
+                <div class="flex justify-between items-center border-b border-neutral-800 pb-3">
+                    <h3 class="text-lg font-extrabold text-[#e6dfd3]">5. صور معرض الأعمال (إضافة / تعديل / حذف)</h3>
+                    <button type="button" onclick="addPortfolioItemCms()" class="btn-champagne font-extrabold text-xs px-4 py-2.5 rounded-full">+ إضافة صورة جديدة للمعرض</button>
+                </div>
+                <div id="cmsPortfolioEditor" class="space-y-4"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- الفوتر الرسمي مع شارة التوثيق ووسائل الدفع -->
+    <footer class="border-t border-neutral-900 bg-[#050505] py-12 text-xs text-neutral-400">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 space-y-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 pb-8 border-b border-neutral-900">
+                <!-- شارة التوثيق في منصة الأعمال -->
+                <div class="flex items-center gap-3.5 bg-[#0e0e0e] border border-neutral-800/90 px-5 py-3 rounded-2xl">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-black text-base">✓</div>
+                    <div class="text-right">
+                        <div class="text-white font-bold text-xs">موثق في منصة الأعمال</div>
+                        <div class="text-[11px] text-neutral-400 mt-0.5">المركز السعودي للأعمال • وثيقة رقم: <span class="text-[#e6dfd3] font-mono">FL-096387355</span></div>
+                    </div>
+                </div>
+
+                <!-- شعارات وسائل الدفع المعتمدة -->
+                <div class="flex flex-wrap items-center justify-center gap-2.5">
+                    <span class="bg-[#0e0e0e] border border-neutral-800 px-3.5 py-2 rounded-xl font-extrabold text-neutral-200 tracking-wider">mada مدى</span>
+                    <span class="bg-[#0e0e0e] border border-neutral-800 px-3.5 py-2 rounded-xl font-extrabold text-neutral-200"> Pay</span>
+                    <span class="bg-[#0e0e0e] border border-neutral-800 px-3.5 py-2 rounded-xl font-extrabold text-neutral-200">VISA / MasterCard</span>
+                    <span class="bg-[#0e0e0e] border border-neutral-800 px-3.5 py-2 rounded-xl font-extrabold text-purple-400">stc pay</span>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-neutral-500">
+                <div class="flex items-center gap-2">
+                    <span id="footerBrandName" class="text-[#e6dfd3] font-black tracking-wider">BANCAM</span>
+                    <span>— جميع الحقوق محفوظة © 2026</span>
+                </div>
+                <button onclick="promptAdminLogin()" class="text-neutral-700 hover:text-[#e6dfd3] transition flex items-center gap-1.5">
+                    <span>🔒</span>
+                    <span>دخول الإدارة</span>
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- نافذة نجاح الحجز -->
+    <div id="successModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden items-center justify-center p-4 z-50">
+        <div class="bg-[#111111] border border-neutral-800 rounded-[2rem] max-w-md w-full p-8 text-center shadow-2xl">
+            <div class="w-16 h-16 bg-[#e6dfd3]/10 border border-[#e6dfd3]/30 text-[#e6dfd3] rounded-full flex items-center justify-center text-3xl mx-auto mb-4">✓</div>
+            <h4 class="text-xl font-black text-white">تم تسجيل طلب الحجز بنجاح!</h4>
+            <div id="ticketNumber" class="bg-[#080808] border border-neutral-800 text-[#e6dfd3] font-mono font-black text-xl py-2.5 px-6 rounded-2xl inline-block my-4">#BK-0000</div>
+            <p class="text-xs text-neutral-400 mb-6">لتأكيد الموعد النهائي مع فريق التنسيق، اضغط على الزر أدناه لإرسال تذكرتك عبر واتساب:</p>
+            <div class="space-y-3">
+                <a id="whatsappBtn" href="#" target="_blank" class="block w-full bg-emerald-500 hover:bg-emerald-400 text-neutral-950 font-extrabold py-3.5 rounded-full transition">إرسال تذكرة الحجز عبر واتساب 💬</a>
+                <button onclick="closeModal()" class="w-full bg-neutral-900 hover:bg-neutral-800 text-neutral-300 py-2.5 rounded-full text-sm font-bold">إغلاق النافذة</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_PIN = "1234";
+        const GOOGLE_SHEET_WEBHOOK = "https://script.google.com/macros/s/AKfycbyQE1-JbPNU0O_GuPWXyT9yVAMTT8yq9CEENkjJ_ABnDsb_YwdKVHpLhUQ_dzXg9_4jew/exec";
+
+        const defaultConfig = {
+            brandName: "BANCAM",
+            brandTagline: "استوديو الإنتاج البصري والتصوير التجاري",
+            logo: "📸",
+            whatsapp: "966593283084",
+            heroBadge: "إنتاج بصري فاخر للشركات، الشقق المخدومة، والعلامات التجارية بالرياض",
+            heroTitle: "من فكرتك إلى حضور بصري يترك أثراً.",
+            heroDesc: "اختر باقة التصوير المناسبة لمشروعك، احسب التكلفة التقديرية الفورية مع الإضافات، واحجز موعدك مباشرة في أقل من دقيقة.",
+            stats: [
+                { num: "+350", label: "مشروع وتغطية ناجحة" },
+                { num: "48 ساعة", label: "سرعة تسليم الأعمال المعدلة" },
+                { num: "4K PRO", label: "معدات سينمائية وإضاءة استوديو" },
+                { num: "100%", label: "التزام بالمواعيد والجودة" }
+            ],
+            packages: [
+                {
+                    icon: "🛍️", badge: "للمتاجر والمطاعم", title: "باقة تصوير المنتجات والأطعمة",
+                    desc: "مثالية للمتاجر الإلكترونية، الكافيهات، والمطاعم لإبراز تفاصيل وجودة المنتجات.",
+                    price: 750, unit: "ريال / للجلسة", featured: false,
+                    features: ["حتى 15 صورة احترافية معدلة بالكامل", "إضاءة استوديو احترافية وخلفيات متنوعة", "معالجة الألوان والحدة للمتاجر والسوشيال ميديا", "التسليم خلال 48 ساعة عبر رابط سحابي"]
+                },
+                {
+                    icon: "🏠", badge: "للمضيفين والشقق المخدومة", title: "باقة تصوير الشقق والتأجير اليومي",
+                    desc: "تصوير عقاري ومعماري يبرز اتساع المساحات وجمال الأثاث والإضاءة لرفع نسبة الإشغال والحجوزات.",
+                    price: 850, unit: "ريال / للشقة أو الوحدة", featured: true,
+                    features: ["25 إلى 35 صورة احترافية بزاوية عريضة (Wide Angle)", "تصوير تفاصيل الضيافة والديكور والزوايا الجمالية", "فيديو جولة سريعة (Reels) طولي جذاب للسوشيال ميديا", "معالجة احترافية للإضاءة والألوان (HDR) لمنصات الحجز"]
+                },
+                {
+                    icon: "🎥", badge: "فوتو + فيديو", title: "باقة تغطية الفعاليات والمعارض",
+                    desc: "توثيق احترافي متكامل للمؤتمرات، أجنحة المعارض، الافتتاحات، والمناسبات الرسمية.",
+                    price: 1400, unit: "ريال / 4 ساعات", featured: false,
+                    features: ["تغطية فوتوغرافية وفيديو ميدانية شاملة", "مونتاج فيديو ملخص للفعالية (Highlight Reel)", "عدد مفتوح من الصور المعدلة عالية الدقة", "تسليم فوري لمقتطفات النشر المباشر"]
+                },
+                {
+                    icon: "🏢", badge: "إنتاج شامل", title: "باقة الهوية البصرية للشركات",
+                    desc: "يوم تصوير كامل لبناء مكتبة صور وفيديوهات إعلانية لمقر الشركة وفريق العمل والخدمات.",
+                    price: 2200, unit: "ريال / يوم عمل", featured: false,
+                    features: ["تصوير المقر، خطوط الإنتاج، وبورتريه الإدارة", "إنتاج 3 مقاطع ريلز إعلانية مع مونتاج احترافي", "إشراف فني وتوجيه كامل أثناء التصوير", "أرشيف كامل جاهز للمطبوعات والموقع الرسمي"]
+                }
+            ],
+            locations: [
+                { name: "داخل الاستوديو", price: 0 },
+                { name: "في مقر العميل - داخل الرياض", price: 200 },
+                { name: "موقع خارجي / تغطية خاصة", price: 500 }
+            ],
+            addons: [
+                { title: "تصوير درون جوي", price: 400 },
+                { title: "مونتاج ريلز إضافي", price: 300 },
+                { title: "تسليم عاجل 24 ساعة", price: 250 }
+            ],
+            portfolio: [
+                { cat: "products", tag: "تصوير منتجات تجارية", title: "إضاءة استوديو للمتاجر الإلكترونية", img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80" },
+                { cat: "events", tag: "المعارض والمؤتمرات", title: "توثيق أجنحة المعارض والفعاليات بالرياض", img: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80" },
+                { cat: "corporate", tag: "الشقق المخدومة والضيافة", title: "تصوير معماري يبرز اتساع المساحات", img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80" }
+            ]
+        };
+
+        let siteConfig = defaultConfig;
+        try {
+            const saved = JSON.parse(localStorage.getItem('studio_cms_config'));
+            if (saved && saved.packages) siteConfig = saved;
+        } catch(e) {}
+
+        let currentLoadedBookings = [];
+
+        renderSiteFromConfig();
+        setTimeout(() => { loadCloudData(); }, 300);
+
+        function renderSiteFromConfig() {
+            document.getElementById('pageTitle').innerText = `${siteConfig.brandName} | بوابة حجوزات التصوير`;
+            document.getElementById('brandNameDisplay').innerText = siteConfig.brandName;
+            document.getElementById('footerBrandName').innerText = siteConfig.brandName;
+            document.getElementById('brandTaglineDisplay').innerText = siteConfig.brandTagline;
+            document.getElementById('heroBadgeDisplay').innerText = siteConfig.heroBadge;
+            document.getElementById('heroTitleDisplay').innerText = siteConfig.heroTitle;
+            document.getElementById('heroDescDisplay').innerText = siteConfig.heroDesc;
+
+            const logoBox = document.getElementById('brandLogoContainer');
+            if (siteConfig.logo && siteConfig.logo.startsWith('http')) {
+                logoBox.innerHTML = `<img src="${siteConfig.logo}" class="w-full h-full object-cover">`;
+            } else {
+                logoBox.innerText = siteConfig.logo || '📸';
+            }
+
+            document.getElementById('statsContainer').innerHTML = (siteConfig.stats || defaultConfig.stats).map(s => `
+                <div class="bg-[#0e0e0e] border border-neutral-900 rounded-2xl p-5">
+                    <div class="text-2xl sm:text-3xl font-black text-[#e6dfd3]">${s.num}</div>
+                    <div class="text-xs text-neutral-400 mt-1.5">${s.label}</div>
+                </div>
+            `).join('');
+
+            document.getElementById('packagesGrid').innerHTML = siteConfig.packages.map((p, idx) => `
+                <div onclick="selectPackage(${idx}, this)" class="luxury-card ${p.featured ? 'selected' : ''} cursor-pointer rounded-[1.8rem] p-7 flex flex-col justify-between relative">
+                    ${p.featured ? `<div class="absolute -top-3.5 right-7 btn-champagne text-xs font-black px-4 py-1 rounded-full shadow-lg">الأكثر طلباً ★</div>` : ''}
+                    <div>
+                        <div class="flex justify-between items-center mb-5">
+                            <span class="w-12 h-12 rounded-2xl bg-[#181818] border border-neutral-800 flex items-center justify-center text-2xl">${p.icon || '📸'}</span>
+                            <span class="bg-[#181818] text-[#e6dfd3] border border-neutral-800 text-xs px-3 py-1 rounded-full font-bold">${p.badge || 'باقة معتمدة'}</span>
+                        </div>
+                        <h4 class="font-extrabold text-xl text-white">${p.title}</h4>
+                        <p class="text-neutral-400 text-xs mt-2 leading-relaxed">${p.desc}</p>
+                        <div class="my-6 pb-6 border-b border-neutral-800/80">
+                            <span class="text-4xl font-black text-[#e6dfd3]">${Number(p.price).toLocaleString()}</span>
+                            <span class="text-neutral-400 text-sm font-semibold">${p.unit}</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-neutral-300 mb-8">
+                            ${(p.features || []).map(f => `<li class="flex items-start gap-2.5"><span class="text-[#e6dfd3] mt-0.5">✦</span> <span>${f}</span></li>`).join('')}
+                        </ul>
+                    </div>
+                    <button type="button" class="pkg-btn w-full py-3.5 rounded-full ${p.featured ? 'btn-champagne' : 'bg-[#181818] hover:bg-neutral-800 text-white border border-neutral-800'} font-extrabold text-sm transition">
+                        ${p.featured ? 'الباقة المختارة حالياً ✓' : 'اختيار هذه الباقة'}
+                    </button>
+                </div>
+            `).join('');
+
+            document.getElementById('packageSelect').innerHTML = siteConfig.packages.map(p => `
+                <option value="${p.price}" data-name="${p.title}" ${p.featured ? 'selected' : ''}>${p.title} (${p.price} ريال)</option>
+            `).join('');
+
+            document.getElementById('locationSelect').innerHTML = siteConfig.locations.map(l => `
+                <option value="${l.price}" data-loc="${l.name}">${l.name} (${l.price > 0 ? '+' + l.price + ' ريال' : 'مجاناً'})</option>
+            `).join('');
+
+            document.getElementById('addonsFormContainer').innerHTML = siteConfig.addons.map(a => `
+                <label class="addon-card flex items-center gap-3 p-3.5 rounded-2xl cursor-pointer transition">
+                    <input type="checkbox" class="addon-check accent-[#e6dfd3] w-4 h-4" value="${a.price}" data-title="${a.title}" onchange="toggleAddonStyle(this); calculateTotal()">
+                    <div>
+                        <div class="text-xs font-bold text-white">${a.title}</div>
+                        <div class="text-[11px] text-[#e6dfd3]">+${a.price} ريال</div>
+                    </div>
+                </label>
+            `).join('');
+
+            document.getElementById('portfolioGrid').innerHTML = siteConfig.portfolio.map(item => `
+                <div data-cat="${item.cat}" class="portfolio-item group relative rounded-[1.8rem] overflow-hidden bg-[#121212] border border-neutral-800 h-72">
+                    <img src="${item.img}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-700 opacity-80">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/30 to-transparent p-6 flex flex-col justify-end">
+                        <span class="text-[#e6dfd3] text-xs font-bold">${item.tag}</span>
+                        <h4 class="text-white font-extrabold text-lg mt-0.5">${item.title}</h4>
+                    </div>
+                </div>
+            `).join('');
+
+            calculateTotal();
+        }
+
+        function syncCmsDomToMemory() {
+            if (!document.getElementById('cmsBrandName')) return;
+            siteConfig.brandName = document.getElementById('cmsBrandName').value;
+            siteConfig.brandTagline = document.getElementById('cmsBrandTagline').value;
+            siteConfig.logo = document.getElementById('cmsLogo').value;
+            siteConfig.whatsapp = document.getElementById('cmsWhatsapp').value;
+            siteConfig.heroTitle = document.getElementById('cmsHeroTitle').value;
+            siteConfig.heroDesc = document.getElementById('cmsHeroDesc').value;
+
+            siteConfig.packages.forEach((p, i) => {
+                if (document.getElementById(`pkg_title_${i}`)) {
+                    p.title = document.getElementById(`pkg_title_${i}`).value;
+                    p.icon = document.getElementById(`pkg_icon_${i}`).value;
+                    p.badge = document.getElementById(`pkg_badge_${i}`).value;
+                    p.price = parseInt(document.getElementById(`pkg_price_${i}`).value) || 0;
+                    p.unit = document.getElementById(`pkg_unit_${i}`).value;
+                    p.desc = document.getElementById(`pkg_desc_${i}`).value;
+                    p.featured = document.getElementById(`pkg_featured_${i}`).checked;
+                    p.features = document.getElementById(`pkg_feat_${i}`).value.split(/،|,|\n/).map(s => s.trim()).filter(Boolean);
+                }
+            });
+
+            siteConfig.locations.forEach((l, i) => {
+                if (document.getElementById(`loc_name_${i}`)) {
+                    l.name = document.getElementById(`loc_name_${i}`).value;
+                    l.price = parseInt(document.getElementById(`loc_price_${i}`).value) || 0;
+                }
+            });
+
+            siteConfig.addons.forEach((a, i) => {
+                if (document.getElementById(`add_title_${i}`)) {
+                    a.title = document.getElementById(`add_title_${i}`).value;
+                    a.price = parseInt(document.getElementById(`add_price_${i}`).value) || 0;
+                }
+            });
+
+            siteConfig.portfolio.forEach((item, i) => {
+                if (document.getElementById(`port_title_${i}`)) {
+                    item.title = document.getElementById(`port_title_${i}`).value;
+                    item.tag = document.getElementById(`port_tag_${i}`).value;
+                    item.img = document.getElementById(`port_img_${i}`).value;
+                    item.cat = document.getElementById(`port_cat_${i}`).value;
+                }
+            });
+        }
+
+        function populateCmsInputs() {
+            document.getElementById('cmsBrandName').value = siteConfig.brandName;
+            document.getElementById('cmsBrandTagline').value = siteConfig.brandTagline;
+            document.getElementById('cmsLogo').value = siteConfig.logo;
+            document.getElementById('cmsWhatsapp').value = siteConfig.whatsapp;
+            document.getElementById('cmsHeroTitle').value = siteConfig.heroTitle;
+            document.getElementById('cmsHeroDesc').value = siteConfig.heroDesc;
+
+            renderCmsPackagesList();
+            renderCmsLocationsList();
+            renderCmsAddonsList();
+            renderCmsPortfolioList();
+        }
+
+        function renderCmsPackagesList() {
+            document.getElementById('cmsPackagesEditor').innerHTML = siteConfig.packages.map((p, i) => `
+                <div class="bg-[#080808] border border-neutral-800 rounded-2xl p-4 space-y-3 relative">
+                    <div class="flex justify-between items-center border-b border-neutral-900 pb-2">
+                        <span class="font-bold text-[#e6dfd3] text-xs">الباقة #${i + 1}</span>
+                        <div class="flex items-center gap-3">
+                            <label class="flex items-center gap-1 text-[11px] text-neutral-300 cursor-pointer">
+                                <input type="checkbox" id="pkg_featured_${i}" ${p.featured ? 'checked' : ''} class="accent-[#e6dfd3]">
+                                <span>الأكثر طلباً ★</span>
+                            </label>
+                            <button type="button" onclick="removePackageCms(${i})" class="bg-red-500/15 hover:bg-red-500/25 text-red-400 px-2.5 py-1 rounded-lg text-[11px] font-bold">حذف</button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2">
+                        <div>
+                            <label class="text-[11px] text-neutral-400">الأيقونة</label>
+                            <input type="text" id="pkg_icon_${i}" value="${p.icon || '📸'}" class="w-full bg-[#121212] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-center text-white">
+                        </div>
+                        <div class="col-span-2">
+                            <label class="text-[11px] text-neutral-400">الوسم العلوي (Badge)</label>
+                            <input type="text" id="pkg_badge_${i}" value="${p.badge || 'باقة مميزة'}" class="w-full bg-[#121212] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-neutral-400">اسم الباقة</label>
+                        <input type="text" id="pkg_title_${i}" value="${p.title}" class="w-full bg-[#121212] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white font-bold">
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="text-[11px] text-neutral-400">السعر (ريال)</label>
+                            <input type="number" id="pkg_price_${i}" value="${p.price}" class="w-full bg-[#121212] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-[#e6dfd3] font-bold">
+                        </div>
+                        <div>
+                            <label class="text-[11px] text-neutral-400">المدة / الوحدة</label>
+                            <input type="text" id="pkg_unit_${i}" value="${p.unit}" class="w-full bg-[#121212] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-neutral-400">وصف مختصر للباقة</label>
+                        <input type="text" id="pkg_desc_${i}" value="${p.desc}" class="w-full bg-[#121212] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-neutral-400">المميزات (افصل بين كل ميزة بفاصلة ،)</label>
+                        <textarea id="pkg_feat_${i}" rows="3" class="w-full bg-[#121212] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white">${(p.features || []).join('، ')}</textarea>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addPackageCms() {
+            syncCmsDomToMemory();
+            siteConfig.packages.push({
+                icon: "✦", badge: "باقة جديدة", title: "باقة تصوير مخصصة",
+                desc: "وصف مختصر لمحتويات الباقة الجديدة وما تقدمه للعميل.",
+                price: 950, unit: "ريال / للجلسة", featured: false,
+                features: ["تصوير احترافي عالي الدقة", "إضاءة استوديو متكاملة", "تسليم سريع خلال 48 ساعة"]
+            });
+            renderCmsPackagesList();
+        }
+
+        function removePackageCms(idx) {
+            if (siteConfig.packages.length <= 1) return alert("يجب إبقاء باقة واحدة على الأقل!");
+            syncCmsDomToMemory();
+            siteConfig.packages.splice(idx, 1);
+            renderCmsPackagesList();
+        }
+
+        function renderCmsLocationsList() {
+            document.getElementById('cmsLocationsEditor').innerHTML = siteConfig.locations.map((l, i) => `
+                <div class="flex gap-2 items-center">
+                    <input type="text" id="loc_name_${i}" value="${l.name}" placeholder="اسم الموقع" class="flex-1 bg-[#080808] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white">
+                    <input type="number" id="loc_price_${i}" value="${l.price}" placeholder="السعر" class="w-24 bg-[#080808] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-[#e6dfd3] font-bold">
+                    <button type="button" onclick="removeLocationCms(${i})" class="bg-red-500/15 text-red-400 px-2.5 py-2 rounded-xl text-xs font-bold">✕</button>
+                </div>
+            `).join('');
+        }
+
+        function addLocationCms() {
+            syncCmsDomToMemory();
+            siteConfig.locations.push({ name: "موقع تصوير جديد", price: 300 });
+            renderCmsLocationsList();
+        }
+
+        function removeLocationCms(idx) {
+            if (siteConfig.locations.length <= 1) return;
+            syncCmsDomToMemory();
+            siteConfig.locations.splice(idx, 1);
+            renderCmsLocationsList();
+        }
+
+        function renderCmsAddonsList() {
+            document.getElementById('cmsAddonsEditor').innerHTML = siteConfig.addons.map((a, i) => `
+                <div class="flex gap-2 items-center">
+                    <input type="text" id="add_title_${i}" value="${a.title}" placeholder="اسم الخدمة الإضافية" class="flex-1 bg-[#080808] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white">
+                    <input type="number" id="add_price_${i}" value="${a.price}" placeholder="السعر" class="w-24 bg-[#080808] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-[#e6dfd3] font-bold">
+                    <button type="button" onclick="removeAddonCms(${i})" class="bg-red-500/15 text-red-400 px-2.5 py-2 rounded-xl text-xs font-bold">✕</button>
+                </div>
+            `).join('');
+        }
+
+        function addAddonCms() {
+            syncCmsDomToMemory();
+            siteConfig.addons.push({ title: "خدمة إضافية جديدة", price: 200 });
+            renderCmsAddonsList();
+        }
+
+        function removeAddonCms(idx) {
+            syncCmsDomToMemory();
+            siteConfig.addons.splice(idx, 1);
+            renderCmsAddonsList();
+        }
+
+        function renderCmsPortfolioList() {
+            document.getElementById('cmsPortfolioEditor').innerHTML = siteConfig.portfolio.map((item, i) => `
+                <div class="grid sm:grid-cols-4 gap-3 bg-[#080808] border border-neutral-800 p-3 rounded-2xl items-center">
+                    <input type="text" id="port_title_${i}" value="${item.title}" placeholder="عنوان العمل" class="bg-[#121212] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white">
+                    <input type="text" id="port_tag_${i}" value="${item.tag}" placeholder="التصنيف الفرعي" class="bg-[#121212] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white">
+                    <input type="text" id="port_img_${i}" value="${item.img}" placeholder="رابط الصورة المباشر https://..." class="bg-[#121212] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white">
+                    <div class="flex gap-2">
+                        <select id="port_cat_${i}" class="flex-1 bg-[#121212] border border-neutral-800 rounded-xl px-2 py-2 text-xs text-white">
+                            <option value="products" ${item.cat === 'products' ? 'selected' : ''}>منتجات</option>
+                            <option value="events" ${item.cat === 'events' ? 'selected' : ''}>فعاليات</option>
+                            <option value="corporate" ${item.cat === 'corporate' ? 'selected' : ''}>شركات وشقق</option>
+                        </select>
+                        <button type="button" onclick="removePortfolioItemCms(${i})" class="bg-red-500/15 text-red-400 px-3 py-2 rounded-xl text-xs font-bold">حذف</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addPortfolioItemCms() {
+            syncCmsDomToMemory();
+            siteConfig.portfolio.push({ cat: "products", tag: "تصوير احترافي", title: "عمل جديد", img: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=800&q=80" });
+            renderCmsPortfolioList();
+        }
+
+        function removePortfolioItemCms(index) {
+            syncCmsDomToMemory();
+            siteConfig.portfolio.splice(index, 1);
+            renderCmsPortfolioList();
+        }
+
+        async function saveCmsToCloud() {
+            const btn = document.getElementById('saveCmsBtn');
+            btn.innerText = "⏳ جاري حفظ التعديلات...";
+            btn.disabled = true;
+
+            syncCmsDomToMemory();
+            localStorage.setItem('studio_cms_config', JSON.stringify(siteConfig));
+            renderSiteFromConfig();
+
+            try {
+                await fetch(GOOGLE_SHEET_WEBHOOK, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: "saveConfig", config: siteConfig })
+                });
+                alert("تم حفظ جميع التعديلات ونشرها على الموقع بنجاح ✓");
+            } catch (e) {
+                alert("تم الحفظ بنجاح!");
+            }
+
+            btn.innerText = "💾 حفظ ونشر جميع التعديلات الآن";
+            btn.disabled = false;
+        }
+
+        function switchAdminTab(tab) {
+            if (tab === 'bookings') {
+                document.getElementById('adminBookingsTab').classList.remove('hidden');
+                document.getElementById('adminCmsTab').classList.add('hidden');
+                document.getElementById('tabBtnBookings').className = "btn-champagne px-5 py-2.5 rounded-full text-xs font-extrabold transition";
+                document.getElementById('tabBtnCms').className = "bg-neutral-900 text-white border border-neutral-800 px-5 py-2.5 rounded-full text-xs font-bold transition";
+            } else {
+                document.getElementById('adminBookingsTab').classList.add('hidden');
+                document.getElementById('adminCmsTab').classList.remove('hidden');
+                document.getElementById('tabBtnCms').className = "btn-champagne px-5 py-2.5 rounded-full text-xs font-extrabold transition";
+                document.getElementById('tabBtnBookings').className = "bg-neutral-900 text-white border border-neutral-800 px-5 py-2.5 rounded-full text-xs font-bold transition";
+                populateCmsInputs();
+            }
+        }
+
+        function promptAdminLogin() {
+            const pin = prompt("أدخل رمز المرور الخاص بلوحة الإدارة:");
+            if (pin === ADMIN_PIN) {
+                document.getElementById('clientView').classList.add('hidden');
+                document.getElementById('adminView').classList.remove('hidden');
+                loadCloudData();
+            } else if (pin !== null) {
+                alert("رمز المرور غير صحيح!");
+            }
+        }
+
+        function exitAdmin() {
+            window.location.hash = '';
+            document.getElementById('adminView').classList.add('hidden');
+            document.getElementById('clientView').classList.remove('hidden');
+        }
+
+        function selectPackage(pkgIndex, cardElement) {
+            document.querySelectorAll('.luxury-card').forEach(c => c.classList.remove('selected'));
+            cardElement.classList.add('selected');
+            document.getElementById('packageSelect').selectedIndex = pkgIndex;
+            calculateTotal();
+            document.getElementById('booking-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function toggleAddonStyle(checkbox) {
+            const card = checkbox.closest('.addon-card');
+            if (checkbox.checked) card.classList.add('active');
+            else card.classList.remove('active');
+        }
+
+        function filterPortfolio(cat, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.className = "filter-btn bg-[#121212] text-neutral-400 hover:text-white border border-neutral-800 font-bold text-xs px-4 py-2 rounded-full transition");
+            btn.className = "filter-btn btn-champagne font-bold text-xs px-4 py-2 rounded-full transition";
+            document.querySelectorAll('.portfolio-item').forEach(item => {
+                if (cat === 'all' || item.getAttribute('data-cat') === cat) item.classList.remove('hidden');
+                else item.classList.add('hidden');
+            });
+        }
+
+        function fillDemoData() {
+            document.getElementById('clientName').value = "شركة بوابة الطباعة";
+            document.getElementById('clientPhone').value = "0551234567";
+            document.getElementById('shootDate').value = new Date(Date.now() + 86400000 * 2).toISOString().split('T')[0];
+            document.getElementById('clientNotes').value = "تصوير منتجات مطبوعات فاخرة وتغطية فيديو لخط الإنتاج.";
+            calculateTotal();
+        }
+
+        function calculateTotal() {
+            const pkgSelect = document.getElementById('packageSelect');
+            const locSelect = document.getElementById('locationSelect');
+            if (!pkgSelect || !pkgSelect.options.length || !locSelect.options.length) return { pkgName: '', locName: '', addonsNames: [], total: 0 };
+
+            const pkgPrice = parseInt(pkgSelect.value) || 0;
+            const pkgName = pkgSelect.options[pkgSelect.selectedIndex].getAttribute('data-name');
+            const locPrice = parseInt(locSelect.value) || 0;
+            const locName = locSelect.options[locSelect.selectedIndex].getAttribute('data-loc');
+
+            let addonsPrice = 0, addonsNames = [];
+            document.querySelectorAll('.addon-check:checked').forEach(chk => {
+                addonsPrice += parseInt(chk.value);
+                addonsNames.push(chk.getAttribute('data-title'));
+            });
+
+            const total = pkgPrice + locPrice + addonsPrice;
+            document.getElementById('summaryPkg').innerText = pkgName;
+            document.getElementById('summaryPkgPrice').innerText = pkgPrice.toLocaleString() + ' ريال';
+            document.getElementById('summaryLoc').innerText = `${locName} (+${locPrice} ر.س)`;
+            document.getElementById('summaryAddons').innerText = addonsNames.length > 0 ? addonsNames.join(' + ') : 'لا يوجد إضافات';
+            document.getElementById('totalPrice').innerText = total.toLocaleString() + ' ريال';
+
+            return { pkgName, locName, addonsNames, total };
+        }
+
+        async function submitBooking(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.innerText = 'جاري حفظ الحجز...';
+            btn.disabled = true;
+
+            const calc = calculateTotal();
+            const bookingData = {
+                ticketId: 'BK-' + Math.floor(1000 + Math.random() * 9000),
+                dateCreated: new Date().toLocaleDateString('ar-SA'),
+                name: document.getElementById('clientName').value,
+                phone: document.getElementById('clientPhone').value,
+                pkgName: calc.pkgName,
+                locName: calc.locName,
+                shootDate: document.getElementById('shootDate').value,
+                shootTime: document.getElementById('shootTime').value,
+                addons: calc.addonsNames.join('، ') || 'لا يوجد',
+                total: calc.total + ' ريال',
+                notes: document.getElementById('clientNotes').value || 'لا يوجد'
+            };
+
+            try {
+                await fetch(GOOGLE_SHEET_WEBHOOK, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(bookingData)
+                });
+            } catch (err) {}
+
+            const waText = `مرحباً، أود تأكيد حجز التصوير لدى BANCAM:%0A🔖 التذكرة: ${bookingData.ticketId}%0A👤 الاسم: ${bookingData.name}%0A📦 الباقة: ${bookingData.pkgName}%0A📅 التاريخ: ${bookingData.shootDate} (${bookingData.shootTime})%0A💰 الإجمالي: ${bookingData.total}`;
+            document.getElementById('ticketNumber').innerText = '#' + bookingData.ticketId;
+            document.getElementById('whatsappBtn').href = `https://wa.me/${siteConfig.whatsapp}?text=${waText}`;
+            document.getElementById('successModal').classList.remove('hidden');
+            document.getElementById('successModal').classList.add('flex');
+
+            btn.innerText = 'تأكيد وإرسال طلب الحجز ✓';
+            btn.disabled = false;
+        }
+
+        async function loadCloudData() {
+            const tbody = document.getElementById('bookingsTableBody');
+            try {
+                const res = await fetch(GOOGLE_SHEET_WEBHOOK);
+                const data = await res.json();
+
+                if (data && data.config && data.config.packages) {
+                    siteConfig = data.config;
+                    localStorage.setItem('studio_cms_config', JSON.stringify(siteConfig));
+                    renderSiteFromConfig();
+                }
+
+                const rawRows = Array.isArray(data) ? data : (data.bookings || []);
+                const rows = rawRows.filter(r => r[0] && String(r[0]).startsWith('BK-')).reverse().map(r => ({
+                    ticketId: r[0], dateCreated: r[1] || '-', name: r[2] || '-', phone: String(r[3] || ''),
+                    pkgName: r[4] || '-', locName: r[5] || '-', shootDate: r[6] ? String(r[6]).split('T')[0] : '-',
+                    shootTime: r[7] || '-', addons: r[8] || 'لا يوجد', total: r[9] || '-'
+                }));
+
+                currentLoadedBookings = rows;
+                if (!rows.length) {
+                    tbody.innerHTML = '<tr><td colspan="9" class="p-10 text-center text-neutral-500">لا توجد حجوزات مسجلة حتى الآن.</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = rows.map(b => `
+                    <tr class="hover:bg-neutral-900/50">
+                        <td class="p-4 font-mono text-[#e6dfd3] font-bold">${b.ticketId}</td>
+                        <td class="p-4 text-xs text-neutral-400">${b.dateCreated}</td>
+                        <td class="p-4 font-bold text-white">${b.name}</td>
+                        <td class="p-4 text-neutral-300" dir="ltr">${b.phone}</td>
+                        <td class="p-4"><div>${b.pkgName}</div><div class="text-xs text-neutral-400">${b.locName}</div></td>
+                        <td class="p-4"><div>${b.shootDate}</div><div class="text-xs text-neutral-400">${b.shootTime}</div></td>
+                        <td class="p-4 text-xs text-[#e6dfd3]">${b.addons}</td>
+                        <td class="p-4 font-extrabold text-emerald-400">${b.total}</td>
+                        <td class="p-4"><a href="https://wa.me/${b.phone.replace(/^0/, '966')}" target="_blank" class="bg-emerald-500/15 text-emerald-400 px-3 py-1.5 rounded-full text-xs font-bold">مراسلة 💬</a></td>
+                    </tr>
+                `).join('');
+            } catch (e) {}
+        }
+
+        function exportCSV() {
+            if (!currentLoadedBookings.length) return alert("لا توجد بيانات لتصديرها!");
+            let csv = "\uFEFFرقم التذكرة,تاريخ الطلب,العميل,الجوال,الباقة,الموقع,تاريخ التصوير,الفترة,الإضافات,الإجمالي\n";
+            currentLoadedBookings.forEach(b => {
+                csv += `"${b.ticketId}","${b.dateCreated}","${b.name}","${b.phone}","${b.pkgName}","${b.locName}","${b.shootDate}","${b.shootTime}","${b.addons}","${b.total}"\n`;
+            });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
+            link.download = "bancamsa-bookings.csv";
+            link.click();
+        }
+
+        function closeModal() {
+            document.getElementById('successModal').classList.add('hidden');
+            document.getElementById('successModal').classList.remove('flex');
+            document.getElementById('bookingForm').reset();
+            calculateTotal();
+        }
+    </script>
+</body>
+</html>
