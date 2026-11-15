@@ -127,18 +127,20 @@
             <div id="packagesGrid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
         </section>
 
-        <!-- قسم معرض الأعمال -->
+        <!-- قسم معرض الأعمال (أصناف مفصولة + ألبومات متعددة الصور) -->
         <section id="portfolio" class="max-w-7xl mx-auto px-4 sm:px-6 py-16 border-t border-neutral-900">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-10 gap-4">
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-10 gap-4">
                 <div>
                     <span class="text-[#e6dfd3] font-bold text-xs tracking-widest uppercase">02 / معرض الأعمال</span>
                     <h3 class="text-3xl sm:text-4xl font-black text-white mt-2">مختارات من إنتاجنا البصري</h3>
+                    <p class="text-neutral-400 text-xs mt-1.5">اضغط على أي مشروع لاستعراض جميع الصور والتفاصيل الخاصة به</p>
                 </div>
                 <div class="flex flex-wrap gap-2">
                     <button onclick="filterPortfolio('all', this)" class="filter-btn btn-champagne font-bold text-xs px-4 py-2 rounded-full transition">الكل</button>
                     <button onclick="filterPortfolio('products', this)" class="filter-btn bg-[#121212] text-neutral-400 hover:text-white border border-neutral-800 font-bold text-xs px-4 py-2 rounded-full transition">المنتجات والأطعمة</button>
                     <button onclick="filterPortfolio('events', this)" class="filter-btn bg-[#121212] text-neutral-400 hover:text-white border border-neutral-800 font-bold text-xs px-4 py-2 rounded-full transition">المعارض والفعاليات</button>
-                    <button onclick="filterPortfolio('corporate', this)" class="filter-btn bg-[#121212] text-neutral-400 hover:text-white border border-neutral-800 font-bold text-xs px-4 py-2 rounded-full transition">الشركات والشقق</button>
+                    <button onclick="filterPortfolio('corporate', this)" class="filter-btn bg-[#121212] text-neutral-400 hover:text-white border border-neutral-800 font-bold text-xs px-4 py-2 rounded-full transition">الشركات</button>
+                    <button onclick="filterPortfolio('apartments', this)" class="filter-btn bg-[#121212] text-neutral-400 hover:text-white border border-neutral-800 font-bold text-xs px-4 py-2 rounded-full transition">الشقق والتأجير اليومي</button>
                 </div>
             </div>
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="portfolioGrid"></div>
@@ -247,7 +249,7 @@
             </div>
         </section>
 
-        <!-- بطاقة الدعوة الختامية الفاخرة (Luxury Cream CTA) -->
+        <!-- بطاقة الدعوة الختامية الفاخرة -->
         <section class="max-w-6xl mx-auto px-4 sm:px-6 pb-20">
             <div class="cta-cream-box rounded-[2.2rem] p-10 sm:p-16 flex flex-col md:flex-row justify-between items-center gap-8 shadow-2xl">
                 <div class="text-right max-w-xl">
@@ -387,13 +389,16 @@
                 </div>
             </div>
 
-            <!-- 4. معرض الأعمال -->
+            <!-- 4. معرض الأعمال (إدارة المشاريع + ألبومات الصور المتعددة) -->
             <div class="bg-[#0e0e0e] border border-neutral-800 rounded-3xl p-6 space-y-5">
-                <div class="flex justify-between items-center border-b border-neutral-800 pb-3">
-                    <h3 class="text-lg font-extrabold text-[#e6dfd3]">5. صور معرض الأعمال (إضافة / تعديل / حذف)</h3>
-                    <button type="button" onclick="addPortfolioItemCms()" class="btn-champagne font-extrabold text-xs px-4 py-2.5 rounded-full">+ إضافة صورة جديدة للمعرض</button>
+                <div class="flex flex-wrap justify-between items-center border-b border-neutral-800 pb-3 gap-3">
+                    <div>
+                        <h3 class="text-lg font-extrabold text-[#e6dfd3]">5. معرض الأعمال والألبومات (إضافة مشاريع وصور متعددة لكل صنف)</h3>
+                        <p class="text-xs text-neutral-400">يمكنك إضافة أكثر من صورة داخل كل مشروع وتعديل مسمى كل صورة على حدة</p>
+                    </div>
+                    <button type="button" onclick="addPortfolioItemCms()" class="btn-champagne font-extrabold text-xs px-4 py-2.5 rounded-full">+ إضافة مشروع / ألبوم جديد للمعرض</button>
                 </div>
-                <div id="cmsPortfolioEditor" class="space-y-4"></div>
+                <div id="cmsPortfolioEditor" class="space-y-6"></div>
             </div>
         </div>
     </div>
@@ -432,6 +437,33 @@
             </div>
         </div>
     </footer>
+
+    <!-- نافذة استعراض ألبوم الصور للمشروع (Lightbox Modal) -->
+    <div id="portfolioLightbox" onclick="if(event.target===this) closeLightbox()" class="fixed inset-0 bg-black/90 backdrop-blur-xl hidden items-center justify-center p-4 z-50">
+        <div class="bg-[#111111] border border-neutral-800 rounded-[2rem] max-w-4xl w-full overflow-hidden shadow-2xl">
+            <div class="flex justify-between items-center px-6 py-4 border-b border-neutral-800">
+                <div>
+                    <span id="lbCategoryTag" class="text-[#e6dfd3] text-xs font-bold"></span>
+                    <h4 id="lbProjectTitle" class="text-white font-black text-lg"></h4>
+                </div>
+                <button onclick="closeLightbox()" class="w-9 h-9 rounded-full bg-neutral-900 hover:bg-neutral-800 text-neutral-300 flex items-center justify-center font-bold">✕</button>
+            </div>
+
+            <div class="relative bg-[#080808] flex items-center justify-center h-[52vh] sm:h-[60vh]">
+                <img id="lbMainImage" src="" alt="" class="max-h-full max-w-full object-contain transition duration-300">
+                <button id="lbPrevBtn" onclick="navigateLightbox(-1)" class="absolute right-4 w-11 h-11 rounded-full bg-black/70 hover:bg-[#e6dfd3] hover:text-black text-white border border-neutral-700 flex items-center justify-center font-black transition">→</button>
+                <button id="lbNextBtn" onclick="navigateLightbox(1)" class="absolute left-4 w-11 h-11 rounded-full bg-black/70 hover:bg-[#e6dfd3] hover:text-black text-white border border-neutral-700 flex items-center justify-center font-black transition">←</button>
+            </div>
+
+            <div class="px-6 py-4 border-t border-neutral-800 bg-[#0c0c0c] flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div class="text-right">
+                    <span id="lbImageCaption" class="text-white font-bold text-sm block"></span>
+                    <span id="lbImageCounter" class="text-neutral-400 text-xs"></span>
+                </div>
+                <div id="lbThumbnails" class="flex items-center gap-2 overflow-x-auto max-w-full pb-1"></div>
+            </div>
+        </div>
+    </div>
 
     <!-- نافذة نجاح الحجز -->
     <div id="successModal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden items-center justify-center p-4 z-50">
@@ -502,27 +534,79 @@
                 { title: "تسليم عاجل 24 ساعة", price: 250 }
             ],
             portfolio: [
-                { cat: "products", tag: "تصوير منتجات تجارية", title: "إضاءة استوديو للمتاجر الإلكترونية", img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80" },
-                { cat: "events", tag: "المعارض والمؤتمرات", title: "توثيق أجنحة المعارض والفعاليات", img: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80" },
-                { cat: "corporate", tag: "الشقق المخدومة والضيافة", title: "تصوير معماري يبرز اتساع المساحات", img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80" }
+                {
+                    cat: "products",
+                    tag: "تصوير منتجات تجارية",
+                    title: "إضاءة استوديو للمتاجر الإلكترونية",
+                    images: [
+                        { url: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=85", caption: "تصوير ساعات وإكسسوارات بإضاءة استوديو ناعمة" },
+                        { url: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1000&q=85", caption: "إبراز تفاصيل الخامات والمنتجات التقنية" }
+                    ]
+                },
+                {
+                    cat: "events",
+                    tag: "المعارض والمؤتمرات",
+                    title: "توثيق أجنحة المعارض والفعاليات",
+                    images: [
+                        { url: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1000&q=85", caption: "تغطية شاملة لقاعات المؤتمرات والمعارض الكبرى" },
+                        { url: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1000&q=85", caption: "توثيق الحضور والتفاعل داخل الأجنحة التجارية" }
+                    ]
+                },
+                {
+                    cat: "corporate",
+                    tag: "الهوية البصرية للشركات",
+                    title: "تصوير مقرات العمل وخطوط الإنتاج",
+                    images: [
+                        { url: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1000&q=85", caption: "تصوير بيئة العمل والمكاتب التنفيذية" },
+                        { url: "https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&w=1000&q=85", caption: "إبراز الهوية المعمارية لمقرات الشركات" }
+                    ]
+                },
+                {
+                    cat: "apartments",
+                    tag: "الشقق المخدومة والتأجير اليومي",
+                    title: "تصوير معماري يبرز اتساع المساحات",
+                    images: [
+                        { url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1000&q=85", caption: "واجهة الوحدة السكنية والإضاءة الطبيعية" },
+                        { url: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=85", caption: "تصوير الصالة الرئيسية بزاوية عريضة (Wide Angle)" },
+                        { url: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1000&q=85", caption: "تفاصيل غرف النوم والضيافة الفندقية" }
+                    ]
+                }
             ]
         };
 
-        function sanitizeBadgeText(cfg) {
-            if (cfg && cfg.heroBadge) {
-                cfg.heroBadge = cfg.heroBadge.replace(/\s*(في الرياض|بالرياض)\s*/g, '').trim();
-                if (!cfg.heroBadge) cfg.heroBadge = defaultConfig.heroBadge;
+        // ترقية تلقائية للبيانات القديمة لدعم الألبومات متعددة الصور وفصل الشركات عن الشقق
+        function normalizeSiteConfig(cfg) {
+            if (!cfg) return defaultConfig;
+            if (cfg.heroBadge) {
+                cfg.heroBadge = cfg.heroBadge.replace(/\s*(في الرياض|بالرياض)\s*/g, '').trim() || defaultConfig.heroBadge;
+            }
+            if (Array.isArray(cfg.portfolio)) {
+                cfg.portfolio = cfg.portfolio.map(item => {
+                    if (!Array.isArray(item.images)) {
+                        return {
+                            cat: item.cat || 'products',
+                            tag: item.tag || 'تصوير احترافي',
+                            title: item.title || 'عمل مميز',
+                            images: item.img ? [{ url: item.img, caption: item.title || 'صورة العمل' }] : []
+                        };
+                    }
+                    return item;
+                });
+            } else {
+                cfg.portfolio = defaultConfig.portfolio;
             }
             return cfg;
         }
 
-        let siteConfig = defaultConfig;
+        let siteConfig = normalizeSiteConfig(defaultConfig);
         try {
             const saved = JSON.parse(localStorage.getItem('studio_cms_config'));
-            if (saved && saved.packages) siteConfig = sanitizeBadgeText(saved);
+            if (saved && saved.packages) siteConfig = normalizeSiteConfig(saved);
         } catch(e) {}
 
         let currentLoadedBookings = [];
+        let currentPortfolioFilter = 'all';
+        let lightboxState = { projectIdx: 0, imageIdx: 0 };
 
         renderSiteFromConfig();
         setTimeout(() => { loadCloudData(); }, 300);
@@ -592,17 +676,80 @@
                 </label>
             `).join('');
 
-            document.getElementById('portfolioGrid').innerHTML = siteConfig.portfolio.map(item => `
-                <div data-cat="${item.cat}" class="portfolio-item group relative rounded-[1.8rem] overflow-hidden bg-[#121212] border border-neutral-800 h-72">
-                    <img src="${item.img}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-700 opacity-80">
-                    <div class="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/30 to-transparent p-6 flex flex-col justify-end">
-                        <span class="text-[#e6dfd3] text-xs font-bold">${item.tag}</span>
-                        <h4 class="text-white font-extrabold text-lg mt-0.5">${item.title}</h4>
-                    </div>
-                </div>
-            `).join('');
-
+            renderPortfolioGrid();
             calculateTotal();
+        }
+
+        function renderPortfolioGrid() {
+            document.getElementById('portfolioGrid').innerHTML = siteConfig.portfolio.map((item, pIdx) => {
+                const coverImg = (item.images && item.images.length > 0) ? item.images[0].url : 'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=800&q=80';
+                const imgCount = item.images ? item.images.length : 0;
+                const isHidden = (currentPortfolioFilter !== 'all' && item.cat !== currentPortfolioFilter) ? 'hidden' : '';
+
+                return `
+                    <div data-cat="${item.cat}" onclick="openLightbox(${pIdx}, 0)" class="portfolio-item ${isHidden} cursor-pointer group relative rounded-[1.8rem] overflow-hidden bg-[#121212] border border-neutral-800 hover:border-[#e6dfd3]/60 transition h-72">
+                        <img src="${coverImg}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-700 opacity-85">
+                        ${imgCount > 1 ? `
+                            <div class="absolute top-4 left-4 bg-black/75 backdrop-blur-md border border-neutral-700 text-[#e6dfd3] text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
+                                <span>🖼️</span>
+                                <span>${imgCount} صور</span>
+                            </div>
+                        ` : ''}
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/35 to-transparent p-6 flex flex-col justify-end">
+                            <span class="text-[#e6dfd3] text-xs font-bold">${item.tag}</span>
+                            <div class="flex justify-between items-end gap-2 mt-0.5">
+                                <h4 class="text-white font-extrabold text-lg">${item.title}</h4>
+                                <span class="text-xs text-neutral-300 group-hover:text-[#e6dfd3] transition shrink-0">عرض الألبوم ↗</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // نافذة عرض الصور المتعددة (Lightbox)
+        function openLightbox(projectIdx, imageIdx = 0) {
+            const project = siteConfig.portfolio[projectIdx];
+            if (!project || !project.images || !project.images.length) return;
+            lightboxState = { projectIdx, imageIdx };
+            updateLightboxUI();
+            const modal = document.getElementById('portfolioLightbox');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeLightbox() {
+            const modal = document.getElementById('portfolioLightbox');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function navigateLightbox(step) {
+            const project = siteConfig.portfolio[lightboxState.projectIdx];
+            if (!project || !project.images.length) return;
+            const total = project.images.length;
+            lightboxState.imageIdx = (lightboxState.imageIdx + step + total) % total;
+            updateLightboxUI();
+        }
+
+        function updateLightboxUI() {
+            const project = siteConfig.portfolio[lightboxState.projectIdx];
+            const currentImg = project.images[lightboxState.imageIdx];
+            document.getElementById('lbCategoryTag').innerText = project.tag;
+            document.getElementById('lbProjectTitle').innerText = project.title;
+            document.getElementById('lbMainImage').src = currentImg.url;
+            document.getElementById('lbImageCaption').innerText = currentImg.caption || project.title;
+            document.getElementById('lbImageCounter').innerText = `صورة ${lightboxState.imageIdx + 1} من ${project.images.length}`;
+
+            const showArrows = project.images.length > 1;
+            document.getElementById('lbPrevBtn').style.display = showArrows ? 'flex' : 'none';
+            document.getElementById('lbNextBtn').style.display = showArrows ? 'flex' : 'none';
+
+            document.getElementById('lbThumbnails').innerHTML = project.images.map((img, idx) => `
+                <button type="button" onclick="openLightbox(${lightboxState.projectIdx}, ${idx})" class="w-14 h-14 rounded-xl overflow-hidden border-2 transition shrink-0 ${idx === lightboxState.imageIdx ? 'border-[#e6dfd3] scale-105' : 'border-transparent opacity-55 hover:opacity-100'}">
+                    <img src="${img.url}" class="w-full h-full object-cover">
+                </button>
+            `).join('');
         }
 
         function syncCmsDomToMemory() {
@@ -646,8 +793,15 @@
                 if (document.getElementById(`port_title_${i}`)) {
                     item.title = document.getElementById(`port_title_${i}`).value;
                     item.tag = document.getElementById(`port_tag_${i}`).value;
-                    item.img = document.getElementById(`port_img_${i}`).value;
                     item.cat = document.getElementById(`port_cat_${i}`).value;
+                    if (Array.isArray(item.images)) {
+                        item.images.forEach((imgObj, j) => {
+                            if (document.getElementById(`port_img_url_${i}_${j}`)) {
+                                imgObj.url = document.getElementById(`port_img_url_${i}_${j}`).value;
+                                imgObj.caption = document.getElementById(`port_img_cap_${i}_${j}`).value;
+                            }
+                        });
+                    }
                 }
             });
         }
@@ -779,19 +933,48 @@
             renderCmsAddonsList();
         }
 
+        // محرر معرض الأعمال المطور: يدعم تعديل المشروع + إضافة صور متعددة وتعديل مسمى كل صورة
         function renderCmsPortfolioList() {
             document.getElementById('cmsPortfolioEditor').innerHTML = siteConfig.portfolio.map((item, i) => `
-                <div class="grid sm:grid-cols-4 gap-3 bg-[#080808] border border-neutral-800 p-3 rounded-2xl items-center">
-                    <input type="text" id="port_title_${i}" value="${item.title}" placeholder="عنوان العمل" class="bg-[#121212] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white">
-                    <input type="text" id="port_tag_${i}" value="${item.tag}" placeholder="التصنيف الفرعي" class="bg-[#121212] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white">
-                    <input type="text" id="port_img_${i}" value="${item.img}" placeholder="رابط الصورة المباشر https://..." class="bg-[#121212] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white">
-                    <div class="flex gap-2">
-                        <select id="port_cat_${i}" class="flex-1 bg-[#121212] border border-neutral-800 rounded-xl px-2 py-2 text-xs text-white">
-                            <option value="products" ${item.cat === 'products' ? 'selected' : ''}>منتجات</option>
-                            <option value="events" ${item.cat === 'events' ? 'selected' : ''}>فعاليات</option>
-                            <option value="corporate" ${item.cat === 'corporate' ? 'selected' : ''}>شركات وشقق</option>
-                        </select>
-                        <button type="button" onclick="removePortfolioItemCms(${i})" class="bg-red-500/15 text-red-400 px-3 py-2 rounded-xl text-xs font-bold">حذف</button>
+                <div class="bg-[#080808] border border-neutral-800 p-5 rounded-2xl space-y-4">
+                    <div class="flex flex-wrap justify-between items-center border-b border-neutral-900 pb-3 gap-2">
+                        <span class="font-extrabold text-[#e6dfd3] text-xs">مشروع / ألبوم #${i + 1} (${(item.images || []).length} صور)</span>
+                        <div class="flex items-center gap-2">
+                            <button type="button" onclick="addImageToPortfolioAlbum(${i})" class="bg-[#e6dfd3]/15 hover:bg-[#e6dfd3]/25 text-[#e6dfd3] border border-[#e6dfd3]/30 px-3 py-1.5 rounded-xl text-xs font-bold">+ إضافة صورة للألبوم</button>
+                            <button type="button" onclick="removePortfolioItemCms(${i})" class="bg-red-500/15 hover:bg-red-500/25 text-red-400 px-3 py-1.5 rounded-xl text-xs font-bold">حذف المشروع</button>
+                        </div>
+                    </div>
+
+                    <div class="grid sm:grid-cols-3 gap-3">
+                        <div>
+                            <label class="text-[11px] text-neutral-400 block mb-1">اسم المشروع الرئيسي</label>
+                            <input type="text" id="port_title_${i}" value="${item.title}" placeholder="عنوان المشروع" class="w-full bg-[#121212] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white font-bold">
+                        </div>
+                        <div>
+                            <label class="text-[11px] text-neutral-400 block mb-1">الوصف الفرعي (Tag)</label>
+                            <input type="text" id="port_tag_${i}" value="${item.tag}" placeholder="مثال: الشقق المخدومة والضيافة" class="w-full bg-[#121212] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white">
+                        </div>
+                        <div>
+                            <label class="text-[11px] text-neutral-400 block mb-1">القسم (التصنيف)</label>
+                            <select id="port_cat_${i}" class="w-full bg-[#121212] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white">
+                                <option value="products" ${item.cat === 'products' ? 'selected' : ''}>المنتجات والأطعمة</option>
+                                <option value="events" ${item.cat === 'events' ? 'selected' : ''}>المعارض والفعاليات</option>
+                                <option value="corporate" ${item.cat === 'corporate' ? 'selected' : ''}>الشركات</option>
+                                <option value="apartments" ${item.cat === 'apartments' ? 'selected' : ''}>الشقق والتأجير اليومي</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2.5 pt-2">
+                        <label class="text-[11px] text-neutral-400 font-bold block">صور الألبوم ومسمياتها (الصورة #1 هي صورة الغلاف الرئيسية):</label>
+                        ${(item.images || []).map((imgObj, j) => `
+                            <div class="flex flex-col sm:flex-row gap-2 items-center bg-[#121212] border border-neutral-800/80 p-2.5 rounded-xl">
+                                <img src="${imgObj.url}" onerror="this.src='https://placehold.co/80x80/181818/e6dfd3?text=IMG'" class="w-11 h-11 rounded-lg object-cover shrink-0 border border-neutral-700">
+                                <input type="text" id="port_img_cap_${i}_${j}" value="${imgObj.caption || ''}" placeholder="مسمى / عنوان هذه الصورة" class="w-full sm:w-1/3 bg-[#080808] border border-neutral-800 rounded-lg px-3 py-2 text-xs text-white">
+                                <input type="text" id="port_img_url_${i}_${j}" value="${imgObj.url || ''}" placeholder="رابط الصورة المباشر https://..." class="w-full flex-1 bg-[#080808] border border-neutral-800 rounded-lg px-3 py-2 text-xs text-neutral-300" dir="ltr">
+                                <button type="button" onclick="removeImageFromPortfolioAlbum(${i}, ${j})" class="bg-red-500/15 text-red-400 px-2.5 py-2 rounded-lg text-xs font-bold shrink-0">✕</button>
+                            </div>
+                        `).join('')}
                     </div>
                 </div>
             `).join('');
@@ -799,7 +982,31 @@
 
         function addPortfolioItemCms() {
             syncCmsDomToMemory();
-            siteConfig.portfolio.push({ cat: "products", tag: "تصوير احترافي", title: "عمل جديد", img: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=800&q=80" });
+            siteConfig.portfolio.push({
+                cat: "apartments",
+                tag: "الشقق المخدومة والتأجير اليومي",
+                title: "مشروع جديد",
+                images: [
+                    { url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1000&q=85", caption: "الصورة الرئيسية للمشروع" }
+                ]
+            });
+            renderCmsPortfolioList();
+        }
+
+        function addImageToPortfolioAlbum(projectIdx) {
+            syncCmsDomToMemory();
+            if (!Array.isArray(siteConfig.portfolio[projectIdx].images)) siteConfig.portfolio[projectIdx].images = [];
+            siteConfig.portfolio[projectIdx].images.push({
+                url: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=85",
+                caption: "زاوية إضافية للمشروع"
+            });
+            renderCmsPortfolioList();
+        }
+
+        function removeImageFromPortfolioAlbum(projectIdx, imgIdx) {
+            if (siteConfig.portfolio[projectIdx].images.length <= 1) return alert("يجب إبقاء صورة واحدة على الأقل في الألبوم!");
+            syncCmsDomToMemory();
+            siteConfig.portfolio[projectIdx].images.splice(imgIdx, 1);
             renderCmsPortfolioList();
         }
 
@@ -881,12 +1088,10 @@
         }
 
         function filterPortfolio(cat, btn) {
+            currentPortfolioFilter = cat;
             document.querySelectorAll('.filter-btn').forEach(b => b.className = "filter-btn bg-[#121212] text-neutral-400 hover:text-white border border-neutral-800 font-bold text-xs px-4 py-2 rounded-full transition");
             btn.className = "filter-btn btn-champagne font-bold text-xs px-4 py-2 rounded-full transition";
-            document.querySelectorAll('.portfolio-item').forEach(item => {
-                if (cat === 'all' || item.getAttribute('data-cat') === cat) item.classList.remove('hidden');
-                else item.classList.add('hidden');
-            });
+            renderPortfolioGrid();
         }
 
         function fillDemoData() {
@@ -970,7 +1175,7 @@
                 const data = await res.json();
 
                 if (data && data.config && data.config.packages) {
-                    siteConfig = sanitizeBadgeText(data.config);
+                    siteConfig = normalizeSiteConfig(data.config);
                     localStorage.setItem('studio_cms_config', JSON.stringify(siteConfig));
                     renderSiteFromConfig();
                 }
