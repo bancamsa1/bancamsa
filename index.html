@@ -124,7 +124,7 @@
                 </div>
                 <p class="text-neutral-400 text-sm">اضغط على أي باقة ليتم تحديدها تلقائياً في حاسبة الحجز بالأسفل</p>
             </div>
-            <div id="packagesGrid" class="grid md:grid-cols-3 gap-7"></div>
+            <div id="packagesGrid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
         </section>
 
         <!-- قسم معرض الأعمال -->
@@ -338,7 +338,11 @@
                         <input type="text" id="cmsWhatsapp" placeholder="9665XXXXXXXX" class="w-full bg-[#080808] border border-neutral-800 rounded-xl px-3 py-2.5 text-sm text-white">
                     </div>
                 </div>
-                <div class="grid sm:grid-cols-2 gap-4">
+                <div class="grid sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs text-neutral-400 mb-1">الشارة العلوية (Hero Badge)</label>
+                        <input type="text" id="cmsHeroBadge" class="w-full bg-[#080808] border border-neutral-800 rounded-xl px-3 py-2.5 text-sm text-white">
+                    </div>
                     <div>
                         <label class="block text-xs text-neutral-400 mb-1">العنوان الرئيسي الكبير (Hero Title)</label>
                         <input type="text" id="cmsHeroTitle" class="w-full bg-[#080808] border border-neutral-800 rounded-xl px-3 py-2.5 text-sm text-white">
@@ -452,7 +456,7 @@
             brandTagline: "استوديو الإنتاج البصري والتصوير التجاري",
             logo: "📸",
             whatsapp: "966593283084",
-            heroBadge: "إنتاج بصري فاخر للشركات، الشقق المخدومة، والعلامات التجارية بالرياض",
+            heroBadge: "إنتاج بصري متكامل للشركات، المتاجر، والمعارض",
             heroTitle: "من فكرتك إلى حضور بصري يترك أثراً.",
             heroDesc: "اختر باقة التصوير المناسبة لمشروعك، احسب التكلفة التقديرية الفورية مع الإضافات، واحجز موعدك مباشرة في أقل من دقيقة.",
             stats: [
@@ -499,15 +503,23 @@
             ],
             portfolio: [
                 { cat: "products", tag: "تصوير منتجات تجارية", title: "إضاءة استوديو للمتاجر الإلكترونية", img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80" },
-                { cat: "events", tag: "المعارض والمؤتمرات", title: "توثيق أجنحة المعارض والفعاليات بالرياض", img: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80" },
+                { cat: "events", tag: "المعارض والمؤتمرات", title: "توثيق أجنحة المعارض والفعاليات", img: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80" },
                 { cat: "corporate", tag: "الشقق المخدومة والضيافة", title: "تصوير معماري يبرز اتساع المساحات", img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80" }
             ]
         };
 
+        function sanitizeBadgeText(cfg) {
+            if (cfg && cfg.heroBadge) {
+                cfg.heroBadge = cfg.heroBadge.replace(/\s*(في الرياض|بالرياض)\s*/g, '').trim();
+                if (!cfg.heroBadge) cfg.heroBadge = defaultConfig.heroBadge;
+            }
+            return cfg;
+        }
+
         let siteConfig = defaultConfig;
         try {
             const saved = JSON.parse(localStorage.getItem('studio_cms_config'));
-            if (saved && saved.packages) siteConfig = saved;
+            if (saved && saved.packages) siteConfig = sanitizeBadgeText(saved);
         } catch(e) {}
 
         let currentLoadedBookings = [];
@@ -520,7 +532,7 @@
             document.getElementById('brandNameDisplay').innerText = siteConfig.brandName;
             document.getElementById('footerBrandName').innerText = siteConfig.brandName;
             document.getElementById('brandTaglineDisplay').innerText = siteConfig.brandTagline;
-            document.getElementById('heroBadgeDisplay').innerText = siteConfig.heroBadge;
+            document.getElementById('heroBadgeDisplay').innerText = siteConfig.heroBadge || defaultConfig.heroBadge;
             document.getElementById('heroTitleDisplay').innerText = siteConfig.heroTitle;
             document.getElementById('heroDescDisplay').innerText = siteConfig.heroDesc;
 
@@ -599,6 +611,7 @@
             siteConfig.brandTagline = document.getElementById('cmsBrandTagline').value;
             siteConfig.logo = document.getElementById('cmsLogo').value;
             siteConfig.whatsapp = document.getElementById('cmsWhatsapp').value;
+            siteConfig.heroBadge = document.getElementById('cmsHeroBadge').value;
             siteConfig.heroTitle = document.getElementById('cmsHeroTitle').value;
             siteConfig.heroDesc = document.getElementById('cmsHeroDesc').value;
 
@@ -644,6 +657,7 @@
             document.getElementById('cmsBrandTagline').value = siteConfig.brandTagline;
             document.getElementById('cmsLogo').value = siteConfig.logo;
             document.getElementById('cmsWhatsapp').value = siteConfig.whatsapp;
+            document.getElementById('cmsHeroBadge').value = siteConfig.heroBadge || defaultConfig.heroBadge;
             document.getElementById('cmsHeroTitle').value = siteConfig.heroTitle;
             document.getElementById('cmsHeroDesc').value = siteConfig.heroDesc;
 
@@ -956,7 +970,7 @@
                 const data = await res.json();
 
                 if (data && data.config && data.config.packages) {
-                    siteConfig = data.config;
+                    siteConfig = sanitizeBadgeText(data.config);
                     localStorage.setItem('studio_cms_config', JSON.stringify(siteConfig));
                     renderSiteFromConfig();
                 }
