@@ -57,6 +57,20 @@
             background: linear-gradient(135deg, #e8e1d5 0%, #cfc6b6 100%);
             color: #0a0a0a;
         }
+        /* تخصيص شريط التمرير داخل نافذة السياسة */
+        .policy-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .policy-scroll::-webkit-scrollbar-track {
+            background: #0c0c0c;
+        }
+        .policy-scroll::-webkit-scrollbar-thumb {
+            background: #2a2a2a;
+            border-radius: 10px;
+        }
+        .policy-scroll::-webkit-scrollbar-thumb:hover {
+            background: #e6dfd3;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-[#e6dfd3] selection:text-[#080808]">
@@ -82,6 +96,7 @@
                     <a href="#packages" class="hover:text-[#e6dfd3] transition">الباقات والأسعار</a>
                     <a href="#portfolio" class="hover:text-[#e6dfd3] transition">معرض الأعمال</a>
                     <a href="#booking-section" class="hover:text-[#e6dfd3] transition">حاسبة التكلفة</a>
+                    <button type="button" onclick="openPolicyModal()" class="hover:text-[#e6dfd3] transition">سياسة الاسترجاع والتسليم</button>
                 </nav>
 
                 <a href="#booking-section" class="btn-champagne font-extrabold px-6 py-2.5 rounded-full text-sm shadow-lg">
@@ -236,10 +251,21 @@
                         </div>
 
                         <div class="border-t border-neutral-900 pt-5 mt-8">
-                            <div class="flex justify-between items-center mb-5">
+                            <div class="flex justify-between items-center mb-4">
                                 <span class="text-neutral-300 font-bold text-sm">الإجمالي التقديري:</span>
                                 <span id="totalPrice" class="text-3xl font-black text-[#e6dfd3]">0 ريال</span>
                             </div>
+
+                            <!-- إقرار الموافقة على الشروط وسياسة الاسترجاع -->
+                            <label class="flex items-start gap-2.5 mb-4 cursor-pointer select-none">
+                                <input type="checkbox" required checked class="accent-[#e6dfd3] mt-1 w-4 h-4 rounded shrink-0">
+                                <span class="text-[11px] text-neutral-400 leading-relaxed">
+                                    أوافق على 
+                                    <button type="button" onclick="openPolicyModal()" class="text-[#e6dfd3] underline font-bold hover:text-white transition">الشروط والأحكام وسياسة الاسترجاع والتسليم</button>
+                                    الخاصة بمنصة BANCAM.
+                                </span>
+                            </label>
+
                             <button type="submit" id="submitBtn" class="w-full btn-champagne font-black py-4 rounded-2xl shadow-xl text-base">
                                 تأكيد وإرسال طلب الحجز ✓
                             </button>
@@ -403,21 +429,38 @@
         </div>
     </div>
 
-    <!-- الفوتر الرسمي مع شارة التوثيق ووسائل الدفع -->
+    <!-- الفوتر الرسمي المعتمد لدى بوابات الدفع ووزارة التجارة -->
     <footer class="border-t border-neutral-900 bg-[#050505] py-12 text-xs text-neutral-400">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 space-y-8">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6 pb-8 border-b border-neutral-900">
-                <!-- شارة التوثيق في منصة الأعمال -->
-                <div class="flex items-center gap-3.5 bg-[#0e0e0e] border border-neutral-800/90 px-5 py-3 rounded-2xl">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-black text-base">✓</div>
-                    <div class="text-right">
-                        <div class="text-white font-bold text-xs">موثق في منصة الأعمال</div>
-                        <div class="text-[11px] text-neutral-400 mt-0.5">المركز السعودي للأعمال • وثيقة رقم: <span class="text-[#e6dfd3] font-mono">FL-096387355</span></div>
+            
+            <!-- الصف الأول: وثيقة العمل الحر + خانة سياسة الاسترجاع والتسليم + وسائل الدفع -->
+            <div class="flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-6 pb-8 border-b border-neutral-900">
+                
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                    <!-- 1. شارة التوثيق في منصة الأعمال -->
+                    <div class="flex items-center gap-3.5 bg-[#0e0e0e] border border-neutral-800/90 px-5 py-3.5 rounded-2xl">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-black text-base shrink-0">✓</div>
+                        <div class="text-right">
+                            <div class="text-white font-bold text-xs">موثق في منصة الأعمال</div>
+                            <div class="text-[11px] text-neutral-400 mt-0.5">وثيقة العمل الحر رقم: <span class="text-[#e6dfd3] font-mono font-bold">096387355-FL</span></div>
+                        </div>
                     </div>
+
+                    <!-- 2. خانة سياسة الاسترجاع والتسليم والشروط والأحكام (بجانب كود الوثيقة مباشرة) -->
+                    <button type="button" onclick="openPolicyModal()" class="flex items-center gap-3.5 bg-[#0e0e0e] hover:bg-[#151515] border border-neutral-800 hover:border-[#e6dfd3]/60 px-5 py-3.5 rounded-2xl transition group text-right">
+                        <div class="w-10 h-10 rounded-xl bg-[#e6dfd3]/10 border border-[#e6dfd3]/25 text-[#e6dfd3] flex items-center justify-center font-black text-base shrink-0 group-hover:bg-[#e6dfd3] group-hover:text-[#080808] transition">⚖️</div>
+                        <div>
+                            <div class="text-white group-hover:text-[#e6dfd3] font-bold text-xs flex items-center gap-1.5 transition">
+                                <span>سياسة الاسترجاع والتسليم والشروط</span>
+                                <span class="text-[10px]">↗</span>
+                            </div>
+                            <div class="text-[11px] text-neutral-400 mt-0.5">معتمدة وفق أنظمة وزارة التجارة السعودية</div>
+                        </div>
+                    </button>
                 </div>
 
-                <!-- شعارات وسائل الدفع المعتمدة -->
-                <div class="flex flex-wrap items-center justify-center gap-2.5">
+                <!-- 3. شعارات وسائل الدفع المعتمدة -->
+                <div class="flex flex-wrap items-center justify-center lg:justify-end gap-2.5">
                     <span class="bg-[#0e0e0e] border border-neutral-800 px-3.5 py-2 rounded-xl font-extrabold text-neutral-200 tracking-wider">mada مدى</span>
                     <span class="bg-[#0e0e0e] border border-neutral-800 px-3.5 py-2 rounded-xl font-extrabold text-neutral-200"> Pay</span>
                     <span class="bg-[#0e0e0e] border border-neutral-800 px-3.5 py-2 rounded-xl font-extrabold text-neutral-200">VISA / MasterCard</span>
@@ -425,10 +468,38 @@
                 </div>
             </div>
 
-            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-neutral-500">
-                <div class="flex items-center gap-2">
+            <!-- الصف الثاني: بيانات التعريف الرسمية (المقر + الجوال + الإيميل + الوثيقة) المطلوبة من بوابات الدفع -->
+            <div class="grid sm:grid-cols-3 gap-4 bg-[#0a0a0a] border border-neutral-900 rounded-2xl p-4 text-neutral-300">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-[#141414] border border-neutral-800 flex items-center justify-center text-[#e6dfd3]">📍</span>
+                    <div>
+                        <span class="text-[10px] text-neutral-500 block">المقر الرئيسي</span>
+                        <span class="font-bold text-xs text-white">الرياض، المملكة العربية السعودية</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-[#141414] border border-neutral-800 flex items-center justify-center text-[#e6dfd3]">📞</span>
+                    <div>
+                        <span class="text-[10px] text-neutral-500 block">التواصل المباشر وخدمة العملاء</span>
+                        <a href="tel:0530080718" class="font-bold text-xs text-white hover:text-[#e6dfd3] transition font-mono" dir="ltr">0530080718</a>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-[#141414] border border-neutral-800 flex items-center justify-center text-[#e6dfd3]">✉️</span>
+                    <div>
+                        <span class="text-[10px] text-neutral-500 block">البريد الإلكتروني الرسمي</span>
+                        <a href="mailto:bancam.sa1@gmail.com" class="font-bold text-xs text-white hover:text-[#e6dfd3] transition font-mono">bancam.sa1@gmail.com</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- الصف الثالث: حقوق الملكية + روابط سريعة + دخول الإدارة -->
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-neutral-500 pt-2">
+                <div class="flex flex-wrap items-center justify-center gap-2">
                     <span id="footerBrandName" class="text-[#e6dfd3] font-black tracking-wider">BANCAM</span>
-                    <span>— جميع الحقوق محفوظة © 2026</span>
+                    <span>(بأنكام) — جميع الحقوق محفوظة © 2026</span>
+                    <span class="hidden sm:inline text-neutral-700">|</span>
+                    <button type="button" onclick="openPolicyModal()" class="text-neutral-400 hover:text-[#e6dfd3] underline transition">الشروط والأحكام وسياسة الاسترجاع والتسليم</button>
                 </div>
                 <button onclick="promptAdminLogin()" class="text-neutral-700 hover:text-[#e6dfd3] transition flex items-center gap-1.5">
                     <span>🔒</span>
@@ -437,6 +508,136 @@
             </div>
         </div>
     </footer>
+
+    <!-- نافذة الشروط والأحكام وسياسة الإلغاء والاسترجاع والتسليم (Modal) -->
+    <div id="policyModal" onclick="if(event.target===this) closePolicyModal()" class="fixed inset-0 bg-black/90 backdrop-blur-xl hidden items-center justify-center p-4 z-50">
+        <div class="bg-[#111111] border border-neutral-800 rounded-[2rem] max-w-4xl w-full max-h-[88vh] flex flex-col overflow-hidden shadow-2xl">
+            
+            <!-- رأس النافذة -->
+            <div class="flex justify-between items-center px-6 sm:px-8 py-5 border-b border-neutral-800 bg-[#0c0c0c] shrink-0">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="bg-[#e6dfd3]/15 text-[#e6dfd3] border border-[#e6dfd3]/30 text-[10px] px-2.5 py-0.5 rounded-full font-bold">وثيقة عمل حر رقم: 096387355-FL</span>
+                        <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] px-2.5 py-0.5 rounded-full font-bold">متوافق مع أنظمة وزارة التجارة</span>
+                    </div>
+                    <h3 class="text-white font-black text-lg sm:text-xl mt-1.5">الشروط والأحكام وسياسة الإلغاء والاسترجاع والتسليم — منصة BANCAM (بأنكام)</h3>
+                </div>
+                <button type="button" onclick="closePolicyModal()" class="w-10 h-10 rounded-full bg-neutral-900 hover:bg-neutral-800 text-neutral-300 flex items-center justify-center font-bold shrink-0">✕</button>
+            </div>
+
+            <!-- محتوى السياسة القابل للتمرير -->
+            <div class="p-6 sm:p-8 overflow-y-auto policy-scroll space-y-6 text-sm leading-relaxed text-neutral-300">
+                
+                <!-- 1. التعريف بالمنشأة والترخيص -->
+                <div class="bg-[#0a0a0a] border border-neutral-800/80 rounded-2xl p-5">
+                    <h4 class="text-[#e6dfd3] font-extrabold text-base mb-2 flex items-center gap-2">
+                        <span>1.</span>
+                        <span>التعريف بالمنشأة والترخيص</span>
+                    </h4>
+                    <p class="text-neutral-300 text-xs sm:text-sm leading-relaxed">
+                        تُدار منصة <strong>BANCAM (بأنكام)</strong> لخدمات التصوير التجاري والإنتاج المرئي في <strong>مدينة الرياض، المملكة العربية السعودية</strong>، بموجب وثيقة العمل الحر الرسمية المعتمدة من وزارة الموارد البشرية والتنمية الاجتماعية والمركز السعودي للأعمال رقم: <span class="text-[#e6dfd3] font-mono font-bold">096387355-FL</span>. وتسري هذه الشروط والأحكام على كافة الحجوزات والباقات المنفذة للأفراد، المتاجر، المضيفين، المعارض، والشركات.
+                    </p>
+                </div>
+
+                <!-- 2. تأكيد الحجز والدفع -->
+                <div class="bg-[#0a0a0a] border border-neutral-800/80 rounded-2xl p-5">
+                    <h4 class="text-[#e6dfd3] font-extrabold text-base mb-2 flex items-center gap-2">
+                        <span>2.</span>
+                        <span>تأكيد الحجز والدفع</span>
+                    </h4>
+                    <ul class="space-y-2 text-xs sm:text-sm list-disc list-inside text-neutral-300">
+                        <li>يُعد الحجز مؤكداً ومجدولاً بصفة رسمية فور سداد الدفعة المقدمة (العربون بنسبة <strong>50%</strong> من قيمة الباقة) أو سداد كامل قيمة الفاتورة عبر بوابة الدفع الإلكتروني المعتمدة أو التحويل البنكي.</li>
+                        <li>تُحتسب المدة الزمنية للتسليم القياسي (<strong>48 ساعة عمل</strong>) بدءاً من وقت انتهاء جلسة التصوير الميدانية واستلام المواد الخام، وتُستثنى منها أيام العطل الرسمية أو المشاريع الضخمة التي يُتفق فيها على جدول زمني خاص.</li>
+                        <li>يلتزم العميل بسداد كامل المتبقي من قيمة الفاتورة عند انتهاء جلسة التصوير أو قبل استلام الروابط النهائية للأعمال عالية الدقة.</li>
+                    </ul>
+                </div>
+
+                <!-- 3. سياسة التسليم وضوابط تنفيذ الباقات -->
+                <div class="bg-[#0a0a0a] border border-neutral-800/80 rounded-2xl p-5">
+                    <h4 class="text-[#e6dfd3] font-extrabold text-base mb-2 flex items-center gap-2">
+                        <span>3.</span>
+                        <span>سياسة التسليم وضوابط تنفيذ الجلسات (شاملة لكافة الباقات)</span>
+                    </h4>
+                    <ul class="space-y-2 text-xs sm:text-sm list-disc list-inside text-neutral-300">
+                        <li><strong>آلية التسليم:</strong> يتم تسليم جميع المخرجات النهائية (صور معالجة عالية الدقة ومقاطع فيديو جاهزة للنشر) إلكترونياً عبر رابط سحابي خاص بالعميل خلال 48 ساعة عمل (أو خلال 24 ساعة في حال اختيار خدمة التسليم العاجل).</li>
+                        <li><strong>جاهزية الموقع والمنتجات:</strong> يلتزم العميل بتجهيز موقع التصوير قبل وصول الفريق (ترتيب وتجهيز الشقق والوحدات السكنية، تحضير المنتجات أو الأطباق، وإصدار تصاريح الدخول اللازمة للمعارض والفعاليات أو مقرات الشركات).</li>
+                        <li><strong>الالتزام بالوقت:</strong> يلتزم العميل بالحضور وإتاحة الموقع في الوقت المحدد؛ وفي حال تأخر العميل أو عدم جاهزية الموقع لأكثر من 30 دقيقة، يُحتسب وقت الانتظار ضمن المدة الزمنية المقررة للباقة.</li>
+                        <li><strong>المواد الخام والأرشفة:</strong> يشمل السعر تسليم المخرجات النهائية المعالجة والممنتجة حسب تفاصيل كل باقة، ولا يشمل تسليم الملفات الخام غير المعالجة (RAW) إلا باتفاق مستقل ورسوم إضافية. ويحتفظ الاستوديو بنسخة احتياطية من الملفات لمدة <strong>30 يوماً</strong> من تاريخ التسليم، وتُخلى مسؤولية المنصة عن حفظ الملفات بعد انقضاء هذه المدة.</li>
+                    </ul>
+                </div>
+
+                <!-- 4. سياسة التعديل وإعادة الجدولة -->
+                <div class="bg-[#0a0a0a] border border-neutral-800/80 rounded-2xl p-5">
+                    <h4 class="text-[#e6dfd3] font-extrabold text-base mb-2 flex items-center gap-2">
+                        <span>4.</span>
+                        <span>سياسة التعديل وإعادة الجدولة</span>
+                    </h4>
+                    <ul class="space-y-2 text-xs sm:text-sm list-disc list-inside text-neutral-300">
+                        <li>يحق للعميل طلب تعديل موعد جلسة التصوير <strong>مجاناً لمرة واحدة</strong>، بشرط إشعار فريق BANCAM قبل الموعد المحدد بـ <strong>24 ساعة</strong> على الأقل، ويتم تحديد الموعد البديل حسب الأوقات المتاحة في جدول الاستوديو.</li>
+                        <li>في حال طلب تعديل الموعد قبل الجلسة بأقل من <strong>24 ساعة</strong>، يتم تطبيق رسوم إعادة جدولة قدرها <strong>150 ريال سعودي</strong> لتعويض حجز جدول المصور والمعدات.</li>
+                    </ul>
+                </div>
+
+                <!-- 5. سياسة الإلغاء والاسترجاع -->
+                <div class="bg-[#0a0a0a] border border-neutral-800/80 rounded-2xl p-5">
+                    <h4 class="text-[#e6dfd3] font-extrabold text-base mb-2 flex items-center gap-2">
+                        <span>5.</span>
+                        <span>سياسة الإلغاء والاسترجاع (وفق ضوابط وزارة التجارة السعودية)</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs sm:text-sm list-disc list-inside text-neutral-300">
+                        <li><strong>الإلغاء قبل الموعد بـ 48 ساعة فأكثر:</strong> يحق للعميل إلغاء الحجز واسترجاع كامل المبلغ المدفوع (<strong>100%</strong>) خلال <strong>3 إلى 7 أيام عمل</strong> عبر نفس وسيلة الدفع المستخدمة.</li>
+                        <li><strong>الإلغاء قبل الموعد بأقل من 48 ساعة:</strong> يُخصم <strong>25%</strong> من قيمة الباقة كرسوم حجز إدارية وتعويض جزئي عن حجز الموعد، ويُسترجع باقي المبلغ للعميل عبر نفس وسيلة الدفع.</li>
+                        <li><strong>الإلغاء في يوم الجلسة أو عدم الحضور للموقع:</strong> لا يُسترد مبلغ العربون المدفوع نظراً لتخصيص فريق التصوير والمعدات وإغلاق الموعد لصالح العميل.</li>
+                        <li><strong>بعد تنفيذ جلسة التصوير:</strong> استناداً إلى نظام التجارة الإلكترونية السعودي (الخاص بخدمات التنفيذ الميداني والمنتجات المصممة حسب مواصفات العميل)، لا يمكن استرجاع قيمة الجلسة بعد إتمام التصوير الميداني، ويلتزم فريق BANCAM بتسليم المخرجات المتفق عليها بجودة <strong>4K</strong> وتنفيذ <strong>جولة تعديلات مجانية واحدة</strong> على المونتاج أو تعديل الألوان وفق ملاحظات العميل.</li>
+                    </ul>
+                </div>
+
+                <!-- 6. حقوق الملكية الفكرية -->
+                <div class="bg-[#0a0a0a] border border-neutral-800/80 rounded-2xl p-5">
+                    <h4 class="text-[#e6dfd3] font-extrabold text-base mb-2 flex items-center gap-2">
+                        <span>6.</span>
+                        <span>حقوق الملكية الفكرية</span>
+                    </h4>
+                    <ul class="space-y-2 text-xs sm:text-sm list-disc list-inside text-neutral-300">
+                        <li>تنتقل حقوق الاستخدام التجاري للمواد النهائية المسلمة إلى العميل بالكامل فور سداد كامل مستحقات الفاتورة.</li>
+                        <li>يحتفظ استوديو <strong>BANCAM</strong> بحق عرض نماذج مختارة من الأعمال في معرض أعماله (Portfolio) وحساباته الرسمية لإبراز جودة الإنتاج، ما لم يطلب العميل اتفاقية عدم إفصاح وسرية (<strong>NDA</strong>) مسبقة قبل تنفيذ التصوير.</li>
+                    </ul>
+                </div>
+
+                <!-- 7. التواصل وخدمة العملاء -->
+                <div class="bg-[#0a0a0a] border border-neutral-800/80 rounded-2xl p-5">
+                    <h4 class="text-[#e6dfd3] font-extrabold text-base mb-2 flex items-center gap-2">
+                        <span>7.</span>
+                        <span>التواصل وخدمة العملاء</span>
+                    </h4>
+                    <p class="text-xs sm:text-sm text-neutral-300 mb-3">
+                        لأي استفسار أو طلب تعديل أو استرجاع، يسعدنا تواصلكم معنا عبر قنوات خدمة العملاء الرسمية خلال ساعات العمل (من الأحد إلى الخميس، 10:00 صباحاً حتى 10:00 مساءً):
+                    </p>
+                    <div class="grid sm:grid-cols-3 gap-3 text-xs bg-[#121212] p-4 rounded-xl border border-neutral-800">
+                        <div>
+                            <span class="text-neutral-500 block">رقم التواصل والواتساب:</span>
+                            <a href="tel:0530080718" class="text-[#e6dfd3] font-bold font-mono" dir="ltr">0530080718</a>
+                        </div>
+                        <div>
+                            <span class="text-neutral-500 block">البريد الإلكتروني:</span>
+                            <a href="mailto:bancam.sa1@gmail.com" class="text-[#e6dfd3] font-bold font-mono">bancam.sa1@gmail.com</a>
+                        </div>
+                        <div>
+                            <span class="text-neutral-500 block">المقر والترخيص:</span>
+                            <span class="text-white font-bold">الرياض • وثيقة: 096387355-FL</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ذيل النافذة -->
+            <div class="px-6 sm:px-8 py-4 border-t border-neutral-800 bg-[#0c0c0c] flex flex-wrap justify-between items-center gap-4 shrink-0">
+                <span class="text-xs text-neutral-400">تاريخ آخر تحديث للسياسة: 2026م — معتمدة لدى منصة BANCAM</span>
+                <button type="button" onclick="closePolicyModal()" class="btn-champagne font-extrabold px-6 py-2.5 rounded-full text-xs">قرأت وأوافق على الشروط ✓</button>
+            </div>
+        </div>
+    </div>
 
     <!-- نافذة استعراض ألبوم الصور للمشروع (Lightbox Modal) -->
     <div id="portfolioLightbox" onclick="if(event.target===this) closeLightbox()" class="fixed inset-0 bg-black/90 backdrop-blur-xl hidden items-center justify-center p-4 z-50">
@@ -487,7 +688,7 @@
             brandName: "BANCAM",
             brandTagline: "استوديو الإنتاج البصري والتصوير التجاري",
             logo: "📸",
-            whatsapp: "966593283084",
+            whatsapp: "966530080718",
             heroBadge: "إنتاج بصري متكامل للشركات، المتاجر، والمعارض",
             heroTitle: "من فكرتك إلى حضور بصري يترك أثراً.",
             heroDesc: "اختر باقة التصوير المناسبة لمشروعك، احسب التكلفة التقديرية الفورية مع الإضافات، واحجز موعدك مباشرة في أقل من دقيقة.",
@@ -610,6 +811,30 @@
 
         renderSiteFromConfig();
         setTimeout(() => { loadCloudData(); }, 300);
+
+        // فتح نافذة السياسة تلقائياً إذا كان الرابط يحتوي على #policy أو #terms (مفيد لمراجعي بوابات الدفع)
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.location.hash === '#policy' || window.location.hash === '#terms') {
+                openPolicyModal();
+            }
+        });
+
+        function openPolicyModal() {
+            const modal = document.getElementById('policyModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePolicyModal() {
+            const modal = document.getElementById('policyModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+            if (window.location.hash === '#policy' || window.location.hash === '#terms') {
+                history.replaceState(null, null, ' ');
+            }
+        }
 
         function renderSiteFromConfig() {
             document.getElementById('pageTitle').innerText = `${siteConfig.brandName} | بوابة حجوزات التصوير`;
