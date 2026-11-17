@@ -294,16 +294,16 @@
         </section>
     </div>
 
-    <!-- 2. لوحة التحكم الشاملة (حجوزات + إدارة محتوى الموقع CMS) -->
+    <!-- 2. لوحة التحكم الشاملة (حجوزات + إدارة محتوى الموقع CMS + إدارة السياسة والشروط) -->
     <div id="adminView" class="hidden max-w-7xl mx-auto px-4 sm:px-6 py-10 w-full">
         <div class="flex flex-wrap justify-between items-center border-b border-neutral-800 pb-6 mb-6 gap-4">
             <div>
                 <span class="bg-emerald-500/15 text-emerald-400 border border-emerald-500/20 text-xs px-3 py-1 rounded-full font-bold">لوحة الإدارة والتحكم الكامل بالموقع (CMS) ✓</span>
-                <h2 class="text-2xl sm:text-3xl font-black text-white mt-2">مركز إدارة الحجوزات وتخصيص الموقع</h2>
+                <h2 class="text-2xl sm:text-3xl font-black text-white mt-2">مركز إدارة الحجوزات وتخصيص الموقع والسياسات</h2>
             </div>
             <div class="flex flex-wrap gap-3">
                 <button onclick="switchAdminTab('bookings')" id="tabBtnBookings" class="btn-champagne px-5 py-2.5 rounded-full text-xs font-extrabold transition">📋 جدول الحجوزات</button>
-                <button onclick="switchAdminTab('cms')" id="tabBtnCms" class="bg-neutral-900 hover:bg-neutral-800 text-white border border-neutral-800 px-5 py-2.5 rounded-full text-xs font-bold transition">🎨 تعديل الموقع والباقات والصور</button>
+                <button onclick="switchAdminTab('cms')" id="tabBtnCms" class="bg-neutral-900 hover:bg-neutral-800 text-white border border-neutral-800 px-5 py-2.5 rounded-full text-xs font-bold transition">🎨 تعديل الموقع والباقات والشروط</button>
                 <button onclick="exitAdmin()" class="bg-neutral-950 border border-neutral-800 text-neutral-300 px-4 py-2.5 rounded-full text-xs font-bold transition">العودة للموقع ←</button>
             </div>
         </div>
@@ -339,7 +339,7 @@
 
         <div id="adminCmsTab" class="hidden space-y-8">
             <div class="bg-[#141414] border border-neutral-700 rounded-2xl p-4 flex flex-wrap justify-between items-center gap-4 sticky top-4 z-30 backdrop-blur-md">
-                <p class="text-xs text-[#e6dfd3] font-semibold">💡 بعد إضافة أو تعديل أي باقة أو صورة، اضغط على زر الحفظ ليتم نشرها لجميع الزوار فوراً.</p>
+                <p class="text-xs text-[#e6dfd3] font-semibold">💡 بعد إضافة أو تعديل أي باقة أو صورة أو بند في السياسة، اضغط على زر الحفظ ليتم نشرها لجميع الزوار فوراً.</p>
                 <button onclick="saveCmsToCloud()" id="saveCmsBtn" class="btn-champagne font-black px-6 py-2.5 rounded-full text-sm shadow-lg">
                     💾 حفظ ونشر جميع التعديلات الآن
                 </button>
@@ -362,7 +362,7 @@
                         <input type="text" id="cmsLogo" placeholder="📸 أو https://.../logo.png" class="w-full bg-[#080808] border border-neutral-800 rounded-xl px-3 py-2.5 text-sm text-white">
                     </div>
                     <div>
-                        <label class="block text-xs text-neutral-400 mb-1">رقم الواتساب (مع 966)</label>
+                        <label class="block text-xs text-neutral-400 mb-1">رقم الواتساب لاستقبال الحجوزات (مع 966)</label>
                         <input type="text" id="cmsWhatsapp" placeholder="9665XXXXXXXX" class="w-full bg-[#080808] border border-neutral-800 rounded-xl px-3 py-2.5 text-sm text-white">
                     </div>
                 </div>
@@ -426,6 +426,63 @@
                 </div>
                 <div id="cmsPortfolioEditor" class="space-y-6"></div>
             </div>
+
+            <!-- 5. إدارة الشروط والأحكام وسياسة الاسترجاع والتسليم والبيانات الرسمية -->
+            <div class="bg-[#0e0e0e] border border-neutral-800 rounded-3xl p-6 space-y-6">
+                <div class="flex flex-wrap justify-between items-center border-b border-neutral-800 pb-4 gap-3">
+                    <div>
+                        <h3 class="text-lg font-extrabold text-[#e6dfd3]">6. الشروط والأحكام وسياسة الاسترجاع والتسليم والبيانات الرسمية</h3>
+                        <p class="text-xs text-neutral-400 mt-1">تحكم كامل في بيانات وثيقة العمل الحر، التواصل، وجميع بنود السياسة الظاهرة للعملاء وبوابات الدفع</p>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <button type="button" onclick="resetPolicyToDefaultCms()" class="bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-700 font-bold text-xs px-3.5 py-2 rounded-full transition">
+                            ↺ استعادة الصياغة الافتراضية
+                        </button>
+                        <button type="button" onclick="addPolicySectionCms()" class="btn-champagne font-extrabold text-xs px-4 py-2 rounded-full transition shadow-lg">
+                            + إضافة بند جديد للسياسة
+                        </button>
+                    </div>
+                </div>
+
+                <!-- الحقول الرسمية للفوتر والسياسة -->
+                <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-4 bg-[#080808] border border-neutral-800/90 p-4 rounded-2xl">
+                    <div>
+                        <label class="block text-xs text-neutral-400 mb-1">رقم وثيقة العمل الحر</label>
+                        <input type="text" id="cmsLicenseNum" placeholder="096387355-FL" class="w-full bg-[#121212] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-[#e6dfd3] font-mono font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-neutral-400 mb-1">المقر الرئيسي (في الفوتر والسياسة)</label>
+                        <input type="text" id="cmsCity" placeholder="الرياض، المملكة العربية السعودية" class="w-full bg-[#121212] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-neutral-400 mb-1">رقم التواصل المباشر (الفوتر والسياسة)</label>
+                        <input type="text" id="cmsContactPhone" placeholder="0530080718" class="w-full bg-[#121212] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white font-mono" dir="ltr">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-neutral-400 mb-1">البريد الإلكتروني الرسمي</label>
+                        <input type="text" id="cmsContactEmail" placeholder="bancam.sa1@gmail.com" class="w-full bg-[#121212] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white font-mono" dir="ltr">
+                    </div>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs text-neutral-400 mb-1">العنوان الرئيسي لنافذة السياسة والشروط</label>
+                        <input type="text" id="cmsPolicyModalTitle" class="w-full bg-[#080808] border border-neutral-800 rounded-xl px-3 py-2.5 text-xs text-white font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-neutral-400 mb-1">نص أوقات العمل في قسم خدمة العملاء أسفل السياسة</label>
+                        <input type="text" id="cmsPolicyWorkingHours" class="w-full bg-[#080808] border border-neutral-800 rounded-xl px-3 py-2.5 text-xs text-white">
+                    </div>
+                </div>
+
+                <!-- قائمة بنود السياسة القابلة للتعديل والإضافة والحذف -->
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-bold text-neutral-300">بنود الشروط والسياسة (اكتب كل نقطة في سطر جديد ليتم عرضها كقائمة منقطة):</label>
+                    </div>
+                    <div id="cmsPolicySectionsEditor" class="grid md:grid-cols-2 gap-4"></div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -442,7 +499,7 @@
                         <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-black text-base shrink-0">✓</div>
                         <div class="text-right">
                             <div class="text-white font-bold text-xs">موثق في منصة الأعمال</div>
-                            <div class="text-[11px] text-neutral-400 mt-0.5">وثيقة العمل الحر رقم: <span class="text-[#e6dfd3] font-mono font-bold">096387355-FL</span></div>
+                            <div class="text-[11px] text-neutral-400 mt-0.5">وثيقة العمل الحر رقم: <span id="footerLicenseDisplay" class="text-[#e6dfd3] font-mono font-bold">096387355-FL</span></div>
                         </div>
                     </div>
 
@@ -468,27 +525,27 @@
                 </div>
             </div>
 
-            <!-- الصف الثاني: بيانات التعريف الرسمية (المقر + الجوال + الإيميل + الوثيقة) المطلوبة من بوابات الدفع -->
+            <!-- الصف الثاني: بيانات التعريف الرسمية (المقر + الجوال + الإيميل) المطلوبة من بوابات الدفع -->
             <div class="grid sm:grid-cols-3 gap-4 bg-[#0a0a0a] border border-neutral-900 rounded-2xl p-4 text-neutral-300">
                 <div class="flex items-center gap-3">
                     <span class="w-8 h-8 rounded-lg bg-[#141414] border border-neutral-800 flex items-center justify-center text-[#e6dfd3]">📍</span>
                     <div>
                         <span class="text-[10px] text-neutral-500 block">المقر الرئيسي</span>
-                        <span class="font-bold text-xs text-white">الرياض، المملكة العربية السعودية</span>
+                        <span id="footerCityDisplay" class="font-bold text-xs text-white">الرياض، المملكة العربية السعودية</span>
                     </div>
                 </div>
                 <div class="flex items-center gap-3">
                     <span class="w-8 h-8 rounded-lg bg-[#141414] border border-neutral-800 flex items-center justify-center text-[#e6dfd3]">📞</span>
                     <div>
                         <span class="text-[10px] text-neutral-500 block">التواصل المباشر وخدمة العملاء</span>
-                        <a href="tel:0530080718" class="font-bold text-xs text-white hover:text-[#e6dfd3] transition font-mono" dir="ltr">0530080718</a>
+                        <a id="footerPhoneDisplay" href="tel:0530080718" class="font-bold text-xs text-white hover:text-[#e6dfd3] transition font-mono" dir="ltr">0530080718</a>
                     </div>
                 </div>
                 <div class="flex items-center gap-3">
                     <span class="w-8 h-8 rounded-lg bg-[#141414] border border-neutral-800 flex items-center justify-center text-[#e6dfd3]">✉️</span>
                     <div>
                         <span class="text-[10px] text-neutral-500 block">البريد الإلكتروني الرسمي</span>
-                        <a href="mailto:bancam.sa1@gmail.com" class="font-bold text-xs text-white hover:text-[#e6dfd3] transition font-mono">bancam.sa1@gmail.com</a>
+                        <a id="footerEmailDisplay" href="mailto:bancam.sa1@gmail.com" class="font-bold text-xs text-white hover:text-[#e6dfd3] transition font-mono">bancam.sa1@gmail.com</a>
                     </div>
                 </div>
             </div>
@@ -509,122 +566,49 @@
         </div>
     </footer>
 
-    <!-- نافذة الشروط والأحكام وسياسة الإلغاء والاسترجاع والتسليم (Modal) -->
+    <!-- نافذة الشروط والأحكام وسياسة الإلغاء والاسترجاع والتسليم (Modal ديناميكي بالكامل) -->
     <div id="policyModal" onclick="if(event.target===this) closePolicyModal()" class="fixed inset-0 bg-black/90 backdrop-blur-xl hidden items-center justify-center p-4 z-50">
         <div class="bg-[#111111] border border-neutral-800 rounded-[2rem] max-w-4xl w-full max-h-[88vh] flex flex-col overflow-hidden shadow-2xl">
             
             <!-- رأس النافذة -->
             <div class="flex justify-between items-center px-6 sm:px-8 py-5 border-b border-neutral-800 bg-[#0c0c0c] shrink-0">
                 <div>
-                    <div class="flex items-center gap-2">
-                        <span class="bg-[#e6dfd3]/15 text-[#e6dfd3] border border-[#e6dfd3]/30 text-[10px] px-2.5 py-0.5 rounded-full font-bold">وثيقة عمل حر رقم: 096387355-FL</span>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span id="policyModalLicenseBadge" class="bg-[#e6dfd3]/15 text-[#e6dfd3] border border-[#e6dfd3]/30 text-[10px] px-2.5 py-0.5 rounded-full font-bold">وثيقة عمل حر رقم: 096387355-FL</span>
                         <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] px-2.5 py-0.5 rounded-full font-bold">متوافق مع أنظمة وزارة التجارة</span>
                     </div>
-                    <h3 class="text-white font-black text-lg sm:text-xl mt-1.5">الشروط والأحكام وسياسة الإلغاء والاسترجاع والتسليم — منصة BANCAM (بأنكام)</h3>
+                    <h3 id="policyModalTitleDisplay" class="text-white font-black text-lg sm:text-xl mt-1.5">الشروط والأحكام وسياسة الإلغاء والاسترجاع والتسليم — منصة BANCAM (بأنكام)</h3>
                 </div>
                 <button type="button" onclick="closePolicyModal()" class="w-10 h-10 rounded-full bg-neutral-900 hover:bg-neutral-800 text-neutral-300 flex items-center justify-center font-bold shrink-0">✕</button>
             </div>
 
-            <!-- محتوى السياسة القابل للتمرير -->
-            <div class="p-6 sm:p-8 overflow-y-auto policy-scroll space-y-6 text-sm leading-relaxed text-neutral-300">
+            <!-- محتوى السياسة القابل للتمرير (يتم توليده ديناميكياً من إعدادات الإدارة) -->
+            <div class="p-6 sm:p-8 overflow-y-auto policy-scroll space-y-5 text-sm leading-relaxed text-neutral-300">
                 
-                <!-- 1. التعريف بالمنشأة والترخيص -->
-                <div class="bg-[#0a0a0a] border border-neutral-800/80 rounded-2xl p-5">
-                    <h4 class="text-[#e6dfd3] font-extrabold text-base mb-2 flex items-center gap-2">
-                        <span>1.</span>
-                        <span>التعريف بالمنشأة والترخيص</span>
-                    </h4>
-                    <p class="text-neutral-300 text-xs sm:text-sm leading-relaxed">
-                        تُدار منصة <strong>BANCAM (بأنكام)</strong> لخدمات التصوير التجاري والإنتاج المرئي في <strong>مدينة الرياض، المملكة العربية السعودية</strong>، بموجب وثيقة العمل الحر الرسمية المعتمدة من وزارة الموارد البشرية والتنمية الاجتماعية والمركز السعودي للأعمال رقم: <span class="text-[#e6dfd3] font-mono font-bold">096387355-FL</span>. وتسري هذه الشروط والأحكام على كافة الحجوزات والباقات المنفذة للأفراد، المتاجر، المضيفين، المعارض، والشركات.
-                    </p>
-                </div>
+                <!-- حاوية البنود الديناميكية -->
+                <div id="policySectionsContainer" class="space-y-5"></div>
 
-                <!-- 2. تأكيد الحجز والدفع -->
+                <!-- صندوق التواصل الرسمي وخدمة العملاء أسفل السياسة -->
                 <div class="bg-[#0a0a0a] border border-neutral-800/80 rounded-2xl p-5">
                     <h4 class="text-[#e6dfd3] font-extrabold text-base mb-2 flex items-center gap-2">
-                        <span>2.</span>
-                        <span>تأكيد الحجز والدفع</span>
+                        <span>📞</span>
+                        <span>التواصل المباشر وخدمة العملاء</span>
                     </h4>
-                    <ul class="space-y-2 text-xs sm:text-sm list-disc list-inside text-neutral-300">
-                        <li>يُعد الحجز مؤكداً ومجدولاً بصفة رسمية فور سداد الدفعة المقدمة (العربون بنسبة <strong>50%</strong> من قيمة الباقة) أو سداد كامل قيمة الفاتورة عبر بوابة الدفع الإلكتروني المعتمدة أو التحويل البنكي.</li>
-                        <li>تُحتسب المدة الزمنية للتسليم القياسي (<strong>48 ساعة عمل</strong>) بدءاً من وقت انتهاء جلسة التصوير الميدانية واستلام المواد الخام، وتُستثنى منها أيام العطل الرسمية أو المشاريع الضخمة التي يُتفق فيها على جدول زمني خاص.</li>
-                        <li>يلتزم العميل بسداد كامل المتبقي من قيمة الفاتورة عند انتهاء جلسة التصوير أو قبل استلام الروابط النهائية للأعمال عالية الدقة.</li>
-                    </ul>
-                </div>
-
-                <!-- 3. سياسة التسليم وضوابط تنفيذ الباقات -->
-                <div class="bg-[#0a0a0a] border border-neutral-800/80 rounded-2xl p-5">
-                    <h4 class="text-[#e6dfd3] font-extrabold text-base mb-2 flex items-center gap-2">
-                        <span>3.</span>
-                        <span>سياسة التسليم وضوابط تنفيذ الجلسات (شاملة لكافة الباقات)</span>
-                    </h4>
-                    <ul class="space-y-2 text-xs sm:text-sm list-disc list-inside text-neutral-300">
-                        <li><strong>آلية التسليم:</strong> يتم تسليم جميع المخرجات النهائية (صور معالجة عالية الدقة ومقاطع فيديو جاهزة للنشر) إلكترونياً عبر رابط سحابي خاص بالعميل خلال 48 ساعة عمل (أو خلال 24 ساعة في حال اختيار خدمة التسليم العاجل).</li>
-                        <li><strong>جاهزية الموقع والمنتجات:</strong> يلتزم العميل بتجهيز موقع التصوير قبل وصول الفريق (ترتيب وتجهيز الشقق والوحدات السكنية، تحضير المنتجات أو الأطباق، وإصدار تصاريح الدخول اللازمة للمعارض والفعاليات أو مقرات الشركات).</li>
-                        <li><strong>الالتزام بالوقت:</strong> يلتزم العميل بالحضور وإتاحة الموقع في الوقت المحدد؛ وفي حال تأخر العميل أو عدم جاهزية الموقع لأكثر من 30 دقيقة، يُحتسب وقت الانتظار ضمن المدة الزمنية المقررة للباقة.</li>
-                        <li><strong>المواد الخام والأرشفة:</strong> يشمل السعر تسليم المخرجات النهائية المعالجة والممنتجة حسب تفاصيل كل باقة، ولا يشمل تسليم الملفات الخام غير المعالجة (RAW) إلا باتفاق مستقل ورسوم إضافية. ويحتفظ الاستوديو بنسخة احتياطية من الملفات لمدة <strong>30 يوماً</strong> من تاريخ التسليم، وتُخلى مسؤولية المنصة عن حفظ الملفات بعد انقضاء هذه المدة.</li>
-                    </ul>
-                </div>
-
-                <!-- 4. سياسة التعديل وإعادة الجدولة -->
-                <div class="bg-[#0a0a0a] border border-neutral-800/80 rounded-2xl p-5">
-                    <h4 class="text-[#e6dfd3] font-extrabold text-base mb-2 flex items-center gap-2">
-                        <span>4.</span>
-                        <span>سياسة التعديل وإعادة الجدولة</span>
-                    </h4>
-                    <ul class="space-y-2 text-xs sm:text-sm list-disc list-inside text-neutral-300">
-                        <li>يحق للعميل طلب تعديل موعد جلسة التصوير <strong>مجاناً لمرة واحدة</strong>، بشرط إشعار فريق BANCAM قبل الموعد المحدد بـ <strong>24 ساعة</strong> على الأقل، ويتم تحديد الموعد البديل حسب الأوقات المتاحة في جدول الاستوديو.</li>
-                        <li>في حال طلب تعديل الموعد قبل الجلسة بأقل من <strong>24 ساعة</strong>، يتم تطبيق رسوم إعادة جدولة قدرها <strong>150 ريال سعودي</strong> لتعويض حجز جدول المصور والمعدات.</li>
-                    </ul>
-                </div>
-
-                <!-- 5. سياسة الإلغاء والاسترجاع -->
-                <div class="bg-[#0a0a0a] border border-neutral-800/80 rounded-2xl p-5">
-                    <h4 class="text-[#e6dfd3] font-extrabold text-base mb-2 flex items-center gap-2">
-                        <span>5.</span>
-                        <span>سياسة الإلغاء والاسترجاع (وفق ضوابط وزارة التجارة السعودية)</span>
-                    </h4>
-                    <ul class="space-y-2.5 text-xs sm:text-sm list-disc list-inside text-neutral-300">
-                        <li><strong>الإلغاء قبل الموعد بـ 48 ساعة فأكثر:</strong> يحق للعميل إلغاء الحجز واسترجاع كامل المبلغ المدفوع (<strong>100%</strong>) خلال <strong>3 إلى 7 أيام عمل</strong> عبر نفس وسيلة الدفع المستخدمة.</li>
-                        <li><strong>الإلغاء قبل الموعد بأقل من 48 ساعة:</strong> يُخصم <strong>25%</strong> من قيمة الباقة كرسوم حجز إدارية وتعويض جزئي عن حجز الموعد، ويُسترجع باقي المبلغ للعميل عبر نفس وسيلة الدفع.</li>
-                        <li><strong>الإلغاء في يوم الجلسة أو عدم الحضور للموقع:</strong> لا يُسترد مبلغ العربون المدفوع نظراً لتخصيص فريق التصوير والمعدات وإغلاق الموعد لصالح العميل.</li>
-                        <li><strong>بعد تنفيذ جلسة التصوير:</strong> استناداً إلى نظام التجارة الإلكترونية السعودي (الخاص بخدمات التنفيذ الميداني والمنتجات المصممة حسب مواصفات العميل)، لا يمكن استرجاع قيمة الجلسة بعد إتمام التصوير الميداني، ويلتزم فريق BANCAM بتسليم المخرجات المتفق عليها بجودة <strong>4K</strong> وتنفيذ <strong>جولة تعديلات مجانية واحدة</strong> على المونتاج أو تعديل الألوان وفق ملاحظات العميل.</li>
-                    </ul>
-                </div>
-
-                <!-- 6. حقوق الملكية الفكرية -->
-                <div class="bg-[#0a0a0a] border border-neutral-800/80 rounded-2xl p-5">
-                    <h4 class="text-[#e6dfd3] font-extrabold text-base mb-2 flex items-center gap-2">
-                        <span>6.</span>
-                        <span>حقوق الملكية الفكرية</span>
-                    </h4>
-                    <ul class="space-y-2 text-xs sm:text-sm list-disc list-inside text-neutral-300">
-                        <li>تنتقل حقوق الاستخدام التجاري للمواد النهائية المسلمة إلى العميل بالكامل فور سداد كامل مستحقات الفاتورة.</li>
-                        <li>يحتفظ استوديو <strong>BANCAM</strong> بحق عرض نماذج مختارة من الأعمال في معرض أعماله (Portfolio) وحساباته الرسمية لإبراز جودة الإنتاج، ما لم يطلب العميل اتفاقية عدم إفصاح وسرية (<strong>NDA</strong>) مسبقة قبل تنفيذ التصوير.</li>
-                    </ul>
-                </div>
-
-                <!-- 7. التواصل وخدمة العملاء -->
-                <div class="bg-[#0a0a0a] border border-neutral-800/80 rounded-2xl p-5">
-                    <h4 class="text-[#e6dfd3] font-extrabold text-base mb-2 flex items-center gap-2">
-                        <span>7.</span>
-                        <span>التواصل وخدمة العملاء</span>
-                    </h4>
-                    <p class="text-xs sm:text-sm text-neutral-300 mb-3">
+                    <p id="policyWorkingHoursDisplay" class="text-xs sm:text-sm text-neutral-300 mb-3">
                         لأي استفسار أو طلب تعديل أو استرجاع، يسعدنا تواصلكم معنا عبر قنوات خدمة العملاء الرسمية خلال ساعات العمل (من الأحد إلى الخميس، 10:00 صباحاً حتى 10:00 مساءً):
                     </p>
                     <div class="grid sm:grid-cols-3 gap-3 text-xs bg-[#121212] p-4 rounded-xl border border-neutral-800">
                         <div>
                             <span class="text-neutral-500 block">رقم التواصل والواتساب:</span>
-                            <a href="tel:0530080718" class="text-[#e6dfd3] font-bold font-mono" dir="ltr">0530080718</a>
+                            <a id="policyPhoneDisplay" href="tel:0530080718" class="text-[#e6dfd3] font-bold font-mono" dir="ltr">0530080718</a>
                         </div>
                         <div>
                             <span class="text-neutral-500 block">البريد الإلكتروني:</span>
-                            <a href="mailto:bancam.sa1@gmail.com" class="text-[#e6dfd3] font-bold font-mono">bancam.sa1@gmail.com</a>
+                            <a id="policyEmailDisplay" href="mailto:bancam.sa1@gmail.com" class="text-[#e6dfd3] font-bold font-mono">bancam.sa1@gmail.com</a>
                         </div>
                         <div>
                             <span class="text-neutral-500 block">المقر والترخيص:</span>
-                            <span class="text-white font-bold">الرياض • وثيقة: 096387355-FL</span>
+                            <span id="policyLocationLicenseDisplay" class="text-white font-bold">الرياض • وثيقة: 096387355-FL</span>
                         </div>
                     </div>
                 </div>
@@ -633,7 +617,7 @@
 
             <!-- ذيل النافذة -->
             <div class="px-6 sm:px-8 py-4 border-t border-neutral-800 bg-[#0c0c0c] flex flex-wrap justify-between items-center gap-4 shrink-0">
-                <span class="text-xs text-neutral-400">تاريخ آخر تحديث للسياسة: 2026م — معتمدة لدى منصة BANCAM</span>
+                <span class="text-xs text-neutral-400">معتمدة وفق ضوابط التجارة الإلكترونية في المملكة العربية السعودية</span>
                 <button type="button" onclick="closePolicyModal()" class="btn-champagne font-extrabold px-6 py-2.5 rounded-full text-xs">قرأت وأوافق على الشروط ✓</button>
             </div>
         </div>
@@ -683,6 +667,41 @@
     <script>
         const ADMIN_PIN = "1234";
         const GOOGLE_SHEET_WEBHOOK = "https://script.google.com/macros/s/AKfycbyQE1-JbPNU0O_GuPWXyT9yVAMTT8yq9CEENkjJ_ABnDsb_YwdKVHpLhUQ_dzXg9_4jew/exec";
+
+        const defaultPolicyConfig = {
+            licenseNum: "096387355-FL",
+            city: "الرياض، المملكة العربية السعودية",
+            contactPhone: "0530080718",
+            contactEmail: "bancam.sa1@gmail.com",
+            modalTitle: "الشروط والأحكام وسياسة الإلغاء والاسترجاع والتسليم — منصة BANCAM (بأنكام)",
+            workingHours: "لأي استفسار أو طلب تعديل أو استرجاع، يسعدنا تواصلكم معنا عبر واتساب خدمة العملاء الرسمي أو البريد الإلكتروني المسجل في الموقع، وذلك خلال ساعات العمل الرسمية (من الأحد إلى الخميس، 10:00 صباحاً حتى 10:00 مساءً):",
+            sections: [
+                {
+                    title: "التعريف بالمنشأة والترخيص",
+                    body: "تُدار منصة BANCAM (بأنكام) لخدمات التصوير التجاري والإنتاج المرئي في مدينة الرياض، المملكة العربية السعودية، بموجب وثيقة العمل الحر الرسمية رقم: 096387355-FL، وتسري هذه الشروط على كافة الحجوزات والباقات المنفذة للأفراد، المتاجر، المضيفين، المعارض، والشركات."
+                },
+                {
+                    title: "تأكيد الحجز والدفع",
+                    body: "يُعد الحجز مؤكداً ومجدولاً فور سداد الدفعة المقدمة (العربون بنسبة 50% من قيمة الباقة) أو سداد كامل قيمة الفاتورة عبر بوابة الدفع الإلكتروني المعتمدة أو التحويل البنكي.\nتُحتسب المدة الزمنية للتسليم (48 ساعة عمل) بدءاً من وقت انتهاء جلسة التصوير الميدانية واستلام المواد الخام.\nيلتزم العميل بسداد كامل المتبقي من قيمة الفاتورة عند انتهاء جلسة التصوير أو قبل استلام الروابط النهائية للأعمال عالية الدقة."
+                },
+                {
+                    title: "سياسة التسليم وضوابط تنفيذ الجلسات (شاملة لكافة الباقات)",
+                    body: "آلية التسليم: يتم تسليم جميع المخرجات النهائية (صور معالجة عالية الدقة ومقاطع فيديو جاهزة للنشر) إلكترونياً عبر رابط سحابي خاص بالعميل خلال 48 ساعة عمل (أو خلال 24 ساعة في حال اختيار خدمة التسليم العاجل).\nجاهزية الموقع والمنتجات: يلتزم العميل بتجهيز موقع التصوير قبل وصول الفريق (ترتيب الشقق والوحدات السكنية، تحضير المنتجات أو الأطباق، وإصدار تصاريح الدخول اللازمة للمعارض أو الشركات).\nالالتزام بالوقت: في حال تأخر العميل أو عدم جاهزية الموقع لأكثر من 30 دقيقة، يُحتسب وقت الانتظار ضمن المدة الزمنية المقررة للباقة.\nالمواد الخام والأرشفة: يشمل السعر تسليم المخرجات النهائية المعالجة والممنتجة حسب تفاصيل كل باقة، ولا يشمل تسليم الملفات الخام غير المعالجة (RAW) إلا باتفاق مستقل. ويحتفظ الاستوديو بنسخة احتياطية لمدة 30 يوماً من تاريخ التسليم."
+                },
+                {
+                    title: "سياسة التعديل وإعادة الجدولة",
+                    body: "يحق للعميل طلب تعديل موعد جلسة التصوير مجاناً لمرة واحدة، بشرط إشعار فريق BANCAM قبل الموعد المحدد بـ 24 ساعة على الأقل.\nفي حال طلب تعديل الموعد قبل الجلسة بأقل من 24 ساعة، يتم تطبيق رسوم إعادة جدولة قدرها 150 ريال سعودي لتعويض حجز جدول المصور."
+                },
+                {
+                    title: "سياسة الإلغاء والاسترجاع (وفق أنظمة وزارة التجارة السعودية)",
+                    body: "الإلغاء قبل الموعد بـ 48 ساعة فأكثر: يحق للعميل إلغاء الحجز واسترجاع كامل المبلغ المدفوع (100%) خلال 3 إلى 7 أيام عمل عبر نفس وسيلة الدفع المستخدمة.\nالإلغاء قبل الموعد بأقل من 48 ساعة: يُخصم 25% من قيمة الباقة كرسوم حجز إدارية، ويُسترجع باقي المبلغ للعميل.\nالإلغاء في يوم الجلسة أو عدم الحضور للموقع: لا يُسترد مبلغ العربون نظراً لتخصيص فريق التصوير والمعدات للموعد.\nبعد تنفيذ جلسة التصوير: لا يمكن استرجاع قيمة الجلسة بعد إتمام التصوير الميداني، ويلتزم فريق BANCAM بتسليم المخرجات المتفق عليها بجودة 4K وتنفيذ جولة تعديلات مجانية واحدة على المونتاج أو تعديل الألوان وفق ملاحظات العميل."
+                },
+                {
+                    title: "حقوق الملكية الفكرية",
+                    body: "تنتقل حقوق الاستخدام التجاري للمواد النهائية المسلمة إلى العميل بالكامل فور سداد كامل مستحقات الفاتورة.\nيحتفظ استوديو BANCAM بحق عرض نماذج مختارة من الأعمال في معرض أعماله (Portfolio) وحساباته الرسمية ما لم يطلب العميل اتفاقية سرية (NDA) مسبقة قبل التصوير."
+                }
+            ]
+        };
 
         const defaultConfig = {
             brandName: "BANCAM",
@@ -772,12 +791,13 @@
                         { url: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1000&q=85", caption: "تفاصيل غرف النوم والضيافة الفندقية" }
                     ]
                 }
-            ]
+            ],
+            policy: JSON.parse(JSON.stringify(defaultPolicyConfig))
         };
 
-        // ترقية تلقائية للبيانات القديمة لدعم الألبومات متعددة الصور وفصل الشركات عن الشقق
+        // ترقية تلقائية للبيانات القديمة لدعم الألبومات متعددة الصور والسياسة القابلة للتعديل
         function normalizeSiteConfig(cfg) {
-            if (!cfg) return defaultConfig;
+            if (!cfg) return JSON.parse(JSON.stringify(defaultConfig));
             if (cfg.heroBadge) {
                 cfg.heroBadge = cfg.heroBadge.replace(/\s*(في الرياض|بالرياض)\s*/g, '').trim() || defaultConfig.heroBadge;
             }
@@ -794,7 +814,21 @@
                     return item;
                 });
             } else {
-                cfg.portfolio = defaultConfig.portfolio;
+                cfg.portfolio = JSON.parse(JSON.stringify(defaultConfig.portfolio));
+            }
+
+            if (!cfg.policy || typeof cfg.policy !== 'object') {
+                cfg.policy = JSON.parse(JSON.stringify(defaultPolicyConfig));
+            } else {
+                cfg.policy.licenseNum = cfg.policy.licenseNum || defaultPolicyConfig.licenseNum;
+                cfg.policy.city = cfg.policy.city || defaultPolicyConfig.city;
+                cfg.policy.contactPhone = cfg.policy.contactPhone || defaultPolicyConfig.contactPhone;
+                cfg.policy.contactEmail = cfg.policy.contactEmail || defaultPolicyConfig.contactEmail;
+                cfg.policy.modalTitle = cfg.policy.modalTitle || defaultPolicyConfig.modalTitle;
+                cfg.policy.workingHours = cfg.policy.workingHours || defaultPolicyConfig.workingHours;
+                if (!Array.isArray(cfg.policy.sections) || !cfg.policy.sections.length) {
+                    cfg.policy.sections = JSON.parse(JSON.stringify(defaultPolicyConfig.sections));
+                }
             }
             return cfg;
         }
@@ -834,6 +868,55 @@
             if (window.location.hash === '#policy' || window.location.hash === '#terms') {
                 history.replaceState(null, null, ' ');
             }
+        }
+
+        function renderPolicyAndFooterFromConfig() {
+            const pol = siteConfig.policy || defaultPolicyConfig;
+
+            // تحديث الفوتر
+            document.getElementById('footerLicenseDisplay').innerText = pol.licenseNum;
+            document.getElementById('footerCityDisplay').innerText = pol.city;
+            const fPhone = document.getElementById('footerPhoneDisplay');
+            fPhone.innerText = pol.contactPhone;
+            fPhone.href = `tel:${pol.contactPhone}`;
+            const fEmail = document.getElementById('footerEmailDisplay');
+            fEmail.innerText = pol.contactEmail;
+            fEmail.href = `mailto:${pol.contactEmail}`;
+
+            // تحديث نافذة السياسة
+            document.getElementById('policyModalLicenseBadge').innerText = `وثيقة عمل حر رقم: ${pol.licenseNum}`;
+            document.getElementById('policyModalTitleDisplay').innerText = pol.modalTitle;
+            document.getElementById('policyWorkingHoursDisplay').innerText = pol.workingHours;
+
+            const pPhone = document.getElementById('policyPhoneDisplay');
+            pPhone.innerText = pol.contactPhone;
+            pPhone.href = `tel:${pol.contactPhone}`;
+            const pEmail = document.getElementById('policyEmailDisplay');
+            pEmail.innerText = pol.contactEmail;
+            pEmail.href = `mailto:${pol.contactEmail}`;
+            document.getElementById('policyLocationLicenseDisplay').innerText = `${pol.city} • وثيقة: ${pol.licenseNum}`;
+
+            // توليد البنود ديناميكياً
+            const sectionsContainer = document.getElementById('policySectionsContainer');
+            sectionsContainer.innerHTML = (pol.sections || []).map((sec, idx) => {
+                const lines = String(sec.body || '').split('\n').map(l => l.trim()).filter(Boolean);
+                let bodyHtml = '';
+                if (lines.length <= 1) {
+                    bodyHtml = `<p class="text-neutral-300 text-xs sm:text-sm leading-relaxed">${lines[0] || ''}</p>`;
+                } else {
+                    bodyHtml = `<ul class="space-y-2 text-xs sm:text-sm list-disc list-inside text-neutral-300">${lines.map(line => `<li>${line}</li>`).join('')}</ul>`;
+                }
+
+                return `
+                    <div class="bg-[#0a0a0a] border border-neutral-800/80 rounded-2xl p-5">
+                        <h4 class="text-[#e6dfd3] font-extrabold text-base mb-2.5 flex items-center gap-2">
+                            <span>${idx + 1}.</span>
+                            <span>${sec.title}</span>
+                        </h4>
+                        ${bodyHtml}
+                    </div>
+                `;
+            }).join('');
         }
 
         function renderSiteFromConfig() {
@@ -902,6 +985,7 @@
             `).join('');
 
             renderPortfolioGrid();
+            renderPolicyAndFooterFromConfig();
             calculateTotal();
         }
 
@@ -1029,6 +1113,25 @@
                     }
                 }
             });
+
+            // مزامنة الشروط والسياسة والبيانات الرسمية
+            if (!siteConfig.policy) siteConfig.policy = JSON.parse(JSON.stringify(defaultPolicyConfig));
+            if (document.getElementById('cmsLicenseNum')) {
+                siteConfig.policy.licenseNum = document.getElementById('cmsLicenseNum').value;
+                siteConfig.policy.city = document.getElementById('cmsCity').value;
+                siteConfig.policy.contactPhone = document.getElementById('cmsContactPhone').value;
+                siteConfig.policy.contactEmail = document.getElementById('cmsContactEmail').value;
+                siteConfig.policy.modalTitle = document.getElementById('cmsPolicyModalTitle').value;
+                siteConfig.policy.workingHours = document.getElementById('cmsPolicyWorkingHours').value;
+            }
+            if (Array.isArray(siteConfig.policy.sections)) {
+                siteConfig.policy.sections.forEach((sec, i) => {
+                    if (document.getElementById(`policy_sec_title_${i}`)) {
+                        sec.title = document.getElementById(`policy_sec_title_${i}`).value;
+                        sec.body = document.getElementById(`policy_sec_body_${i}`).value;
+                    }
+                });
+            }
         }
 
         function populateCmsInputs() {
@@ -1040,10 +1143,63 @@
             document.getElementById('cmsHeroTitle').value = siteConfig.heroTitle;
             document.getElementById('cmsHeroDesc').value = siteConfig.heroDesc;
 
+            const pol = siteConfig.policy || defaultPolicyConfig;
+            document.getElementById('cmsLicenseNum').value = pol.licenseNum;
+            document.getElementById('cmsCity').value = pol.city;
+            document.getElementById('cmsContactPhone').value = pol.contactPhone;
+            document.getElementById('cmsContactEmail').value = pol.contactEmail;
+            document.getElementById('cmsPolicyModalTitle').value = pol.modalTitle;
+            document.getElementById('cmsPolicyWorkingHours').value = pol.workingHours;
+
             renderCmsPackagesList();
             renderCmsLocationsList();
             renderCmsAddonsList();
             renderCmsPortfolioList();
+            renderCmsPolicyList();
+        }
+
+        function renderCmsPolicyList() {
+            const pol = siteConfig.policy || defaultPolicyConfig;
+            document.getElementById('cmsPolicySectionsEditor').innerHTML = (pol.sections || []).map((sec, i) => `
+                <div class="bg-[#080808] border border-neutral-800 rounded-2xl p-4 space-y-3">
+                    <div class="flex justify-between items-center border-b border-neutral-900 pb-2">
+                        <span class="font-bold text-[#e6dfd3] text-xs">البند #${i + 1}</span>
+                        <button type="button" onclick="removePolicySectionCms(${i})" class="bg-red-500/15 hover:bg-red-500/25 text-red-400 px-2.5 py-1 rounded-lg text-[11px] font-bold">حذف البند</button>
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-neutral-400 block mb-1">عنوان البند</label>
+                        <input type="text" id="policy_sec_title_${i}" value="${sec.title}" class="w-full bg-[#121212] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white font-bold">
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-neutral-400 block mb-1">تفاصيل وشروط البند (كل سطر جديد يظهر كنقطة مستقلة)</label>
+                        <textarea id="policy_sec_body_${i}" rows="4" class="w-full bg-[#121212] border border-neutral-800 rounded-xl px-3 py-2 text-xs text-neutral-200 leading-relaxed">${sec.body}</textarea>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addPolicySectionCms() {
+            syncCmsDomToMemory();
+            siteConfig.policy.sections.push({
+                title: "بند إضافي جديد",
+                body: "اكتب تفاصيل البند أو الشرط الأول هنا.\nاكتب الشرط الثاني في سطر جديد ليظهر كنقطة ثانية."
+            });
+            renderCmsPolicyList();
+        }
+
+        function removePolicySectionCms(idx) {
+            if (siteConfig.policy.sections.length <= 1) return alert("يجب إبقاء بند واحد على الأقل في السياسة!");
+            syncCmsDomToMemory();
+            siteConfig.policy.sections.splice(idx, 1);
+            renderCmsPolicyList();
+        }
+
+        function resetPolicyToDefaultCms() {
+            if (!confirm("هل أنت متأكد من استعادة النص القانوني الافتراضي للسياسة والشروط؟")) return;
+            syncCmsDomToMemory();
+            siteConfig.policy = JSON.parse(JSON.stringify(defaultPolicyConfig));
+            populateCmsInputs();
+            renderPolicyAndFooterFromConfig();
         }
 
         function renderCmsPackagesList() {
@@ -1257,7 +1413,7 @@
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify({ action: "saveConfig", config: siteConfig })
                 });
-                alert("تم حفظ جميع التعديلات ونشرها على الموقع بنجاح ✓");
+                alert("تم حفظ جميع التعديلات (بما فيها الشروط وسياسة الموقع) ونشرها بنجاح ✓");
             } catch (e) {
                 alert("تم الحفظ بنجاح!");
             }
